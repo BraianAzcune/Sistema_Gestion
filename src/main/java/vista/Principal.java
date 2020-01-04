@@ -65,6 +65,14 @@ public class Principal extends JFrame {
 		setTitle("Cultural Argentino");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 200, 786, 686);
+		
+		//Incorporo al JFRAME Principal un panel AñadirSocio
+		JPanel panelAñadirSocio= new AñadirSocio();
+		add(panelAñadirSocio);
+		
+		
+/*
+		
 		layergruop = new JPanel();
 		layergruop.setForeground(Color.GREEN);
 		layergruop.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -566,5 +574,7 @@ public class Principal extends JFrame {
 		JRadioButton Vitalicio = new JRadioButton("Vitalicio");
 		panel.add(Vitalicio);
 		layergruop.setLayout(gl_layergruop);
+		
+		*/
 	}
 }
