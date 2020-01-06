@@ -21,6 +21,7 @@ import java.awt.SystemColor;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Insets;
 
 public class AyudaDialog extends JDialog implements ActionListener{
 
@@ -42,9 +43,11 @@ public class AyudaDialog extends JDialog implements ActionListener{
 		{
 			//UTILIZA HTML
 			JTextPane textPane = new JTextPane();
+			textPane.setBorder(null);
+			textPane.setOpaque(false);
 			textPane.setContentType("text/html");
 			textPane.setFocusable(false);
-			textPane.setText("<html><font face=\"arial\" size='5' color=rgb(1,1,1)>"
+			textPane.setText("<html bgcolor=\"#f0f0f0\"><font face=\"arial\" size='5' color=rgb(1,1,1)>"
 					+ "<ul>\r\n" + 
 					"  <li>Utiliza Tab para navegar entre los campos</li>\r\n" + 
 					"  <li>Shift+Tab para retroceder</li>\r\n" + 
