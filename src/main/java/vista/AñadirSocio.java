@@ -22,6 +22,7 @@ public class AñadirSocio extends JPanel {
 	 * Create the panel.
 	 */
 	public AñadirSocio() {
+		setFocusable(false);
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setLayout(new BorderLayout(0, 0));
 		
@@ -35,6 +36,7 @@ public class AñadirSocio extends JPanel {
 		this.add(lblTitulo, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
+		panel.setFocusable(false);
 		this.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.TRAILING, 5, 5));
 		
@@ -49,12 +51,13 @@ public class AñadirSocio extends JPanel {
 		panel.add(btnCancelar);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setFocusable(false);
 		this.add(panel_1, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{82, 101, 0, 0};
 		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_1.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
 		JLabel lblNombre = new JLabel("Nombre");
@@ -68,9 +71,10 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(lblNombre, gbc_lblNombre);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldNombre = new GridBagConstraints();
 		gbc_textFieldNombre.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldNombre.fill = GridBagConstraints.BOTH;
+		gbc_textFieldNombre.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldNombre.gridx = 1;
 		gbc_textFieldNombre.gridy = 0;
 		panel_1.add(textFieldNombre, gbc_textFieldNombre);
@@ -97,9 +101,10 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(lblApellido, gbc_lblApellido);
 		
 		textFieldApellido = new JTextField();
+		textFieldApellido.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldApellido = new GridBagConstraints();
 		gbc_textFieldApellido.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldApellido.fill = GridBagConstraints.BOTH;
+		gbc_textFieldApellido.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldApellido.gridx = 1;
 		gbc_textFieldApellido.gridy = 1;
 		panel_1.add(textFieldApellido, gbc_textFieldApellido);
@@ -126,9 +131,10 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(lblDireccion, gbc_lblDireccion);
 		
 		textFieldDireccion = new JTextField();
+		textFieldDireccion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldDireccion = new GridBagConstraints();
 		gbc_textFieldDireccion.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldDireccion.fill = GridBagConstraints.BOTH;
+		gbc_textFieldDireccion.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldDireccion.gridx = 1;
 		gbc_textFieldDireccion.gridy = 2;
 		panel_1.add(textFieldDireccion, gbc_textFieldDireccion);
@@ -155,9 +161,10 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(lblDni, gbc_lblDni);
 		
 		textFieldDNI = new JTextField();
+		textFieldDNI.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldDNI = new GridBagConstraints();
 		gbc_textFieldDNI.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldDNI.fill = GridBagConstraints.BOTH;
+		gbc_textFieldDNI.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldDNI.gridx = 1;
 		gbc_textFieldDNI.gridy = 3;
 		panel_1.add(textFieldDNI, gbc_textFieldDNI);
@@ -184,9 +191,10 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(lblTelefono, gbc_lblTelefono);
 		
 		textFieldTelefono = new JTextField();
+		textFieldTelefono.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldTelefono = new GridBagConstraints();
 		gbc_textFieldTelefono.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldTelefono.fill = GridBagConstraints.BOTH;
+		gbc_textFieldTelefono.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldTelefono.gridx = 1;
 		gbc_textFieldTelefono.gridy = 4;
 		panel_1.add(textFieldTelefono, gbc_textFieldTelefono);
@@ -213,9 +221,10 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(lblNumeroSocio, gbc_lblNumeroSocio);
 		
 		textFieldNumeroSocio = new JTextField();
+		textFieldNumeroSocio.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldNumeroSocio = new GridBagConstraints();
 		gbc_textFieldNumeroSocio.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldNumeroSocio.fill = GridBagConstraints.BOTH;
+		gbc_textFieldNumeroSocio.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldNumeroSocio.gridx = 1;
 		gbc_textFieldNumeroSocio.gridy = 5;
 		panel_1.add(textFieldNumeroSocio, gbc_textFieldNumeroSocio);
@@ -242,9 +251,10 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(lblEmail, gbc_lblEmail);
 		
 		textFieldEmail = new JTextField();
+		textFieldEmail.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldEmail = new GridBagConstraints();
 		gbc_textFieldEmail.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldEmail.fill = GridBagConstraints.BOTH;
+		gbc_textFieldEmail.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldEmail.gridx = 1;
 		gbc_textFieldEmail.gridy = 6;
 		panel_1.add(textFieldEmail, gbc_textFieldEmail);
@@ -318,6 +328,7 @@ public class AñadirSocio extends JPanel {
 		lblTipoSocio.setFocusable(false);
 		lblTipoSocio.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblTipoSocio = new GridBagConstraints();
+		gbc_lblTipoSocio.fill = GridBagConstraints.VERTICAL;
 		gbc_lblTipoSocio.anchor = GridBagConstraints.WEST;
 		gbc_lblTipoSocio.insets = new Insets(0, 0, 0, 5);
 		gbc_lblTipoSocio.gridx = 0;

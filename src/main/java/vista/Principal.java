@@ -10,6 +10,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JSeparator;
@@ -26,6 +27,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JFormattedTextField;
@@ -46,6 +48,9 @@ public class Principal extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		CambiarEstilosGlobales();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -57,11 +62,33 @@ public class Principal extends JFrame {
 			}
 		});
 	}
-
+	
+	private static void CambiarEstilosGlobales() {
+		
+		try{
+			  
+			  JFrame.setDefaultLookAndFeelDecorated(true);
+			  JDialog.setDefaultLookAndFeelDecorated(true);
+			  UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+			  //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");//Este no funciona bien
+			  //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");//tampoco
+			  //UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");//mismo
+			  //UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");//same
+			  //UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");/same
+			  
+			    
+			}
+			catch (Exception e)
+			 {
+			  e.printStackTrace();
+			 }
+	}
+	
 	/**
 	 * Create the frame.
 	 */
 	public Principal() {
+		
 		setTitle("Cultural Argentino");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 200, 786, 686);
@@ -69,6 +96,7 @@ public class Principal extends JFrame {
 		//Incorporo al JFRAME Principal un panel AñadirSocio
 		JPanel panelAñadirSocio= new AñadirSocio();
 		add(panelAñadirSocio);
+		
 		
 		
 /*
