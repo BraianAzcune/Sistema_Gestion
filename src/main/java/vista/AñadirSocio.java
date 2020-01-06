@@ -5,6 +5,8 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import com.sun.glass.events.KeyEvent;
+
 
 public class AñadirSocio extends JPanel {
 
@@ -25,8 +27,11 @@ public class AñadirSocio extends JPanel {
 		
 		
 		JLabel lblTitulo = new JLabel("A\u00F1adir Socio");
+		lblTitulo.setFocusable(false);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		//lblTitulo.setIcon(new ImageIcon("src/resources/identificacion2.png"));
+		lblTitulo.setIcon(new ImageIcon(getClass().getResource("/identificacion2.png")));
 		this.add(lblTitulo, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
@@ -35,10 +40,12 @@ public class AñadirSocio extends JPanel {
 		
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnConfirmar.setIcon(new ImageIcon(getClass().getResource("/comprobar.png")));
 		panel.add(btnConfirmar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnCancelar.setIcon(new ImageIcon(getClass().getResource("/cancelar.png")));
 		panel.add(btnCancelar);
 		
 		JPanel panel_1 = new JPanel();
@@ -51,6 +58,7 @@ public class AñadirSocio extends JPanel {
 		panel_1.setLayout(gbl_panel_1);
 		
 		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre.setFocusable(false);
 		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
 		gbc_lblNombre.anchor = GridBagConstraints.WEST;
@@ -68,9 +76,10 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(textFieldNombre, gbc_textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
-		JButton btnBorrarNombre = new JButton("-");
+		JButton btnBorrarNombre = new JButton("");
 		btnBorrarNombre.setFocusable(false);
 		btnBorrarNombre.setToolTipText("Borrar campo");
+		btnBorrarNombre.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		GridBagConstraints gbc_btnBorrarNombre = new GridBagConstraints();
 		gbc_btnBorrarNombre.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBorrarNombre.gridx = 2;
@@ -78,6 +87,7 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(btnBorrarNombre, gbc_btnBorrarNombre);
 		
 		JLabel lblApellido = new JLabel("Apellido");
+		lblApellido.setFocusable(false);
 		lblApellido.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblApellido = new GridBagConstraints();
 		gbc_lblApellido.anchor = GridBagConstraints.WEST;
@@ -95,8 +105,9 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(textFieldApellido, gbc_textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
-		JButton btnBorrarApellido = new JButton("-");
+		JButton btnBorrarApellido = new JButton("");
 		btnBorrarApellido.setFocusable(false);
+		btnBorrarApellido.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarApellido.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarApellido = new GridBagConstraints();
 		gbc_btnBorrarApellido.insets = new Insets(0, 0, 5, 0);
@@ -105,6 +116,7 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(btnBorrarApellido, gbc_btnBorrarApellido);
 		
 		JLabel lblDireccion = new JLabel("Direccion");
+		lblDireccion.setFocusable(false);
 		lblDireccion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblDireccion = new GridBagConstraints();
 		gbc_lblDireccion.anchor = GridBagConstraints.WEST;
@@ -122,8 +134,9 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(textFieldDireccion, gbc_textFieldDireccion);
 		textFieldDireccion.setColumns(10);
 		
-		JButton btnBorrarDireccion = new JButton("-");
+		JButton btnBorrarDireccion = new JButton("");
 		btnBorrarDireccion.setFocusable(false);
+		btnBorrarDireccion.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarDireccion.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarDireccion = new GridBagConstraints();
 		gbc_btnBorrarDireccion.insets = new Insets(0, 0, 5, 0);
@@ -132,6 +145,7 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(btnBorrarDireccion, gbc_btnBorrarDireccion);
 		
 		JLabel lblDni = new JLabel("DNI");
+		lblDni.setFocusable(false);
 		lblDni.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblDni = new GridBagConstraints();
 		gbc_lblDni.anchor = GridBagConstraints.WEST;
@@ -149,8 +163,9 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(textFieldDNI, gbc_textFieldDNI);
 		textFieldDNI.setColumns(10);
 		
-		JButton btnBorrarDNI = new JButton("-");
+		JButton btnBorrarDNI = new JButton("");
 		btnBorrarDNI.setFocusable(false);
+		btnBorrarDNI.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarDNI.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarDNI = new GridBagConstraints();
 		gbc_btnBorrarDNI.insets = new Insets(0, 0, 5, 0);
@@ -159,6 +174,7 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(btnBorrarDNI, gbc_btnBorrarDNI);
 		
 		JLabel lblTelefono = new JLabel("Telefono");
+		lblTelefono.setFocusable(false);
 		lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblTelefono = new GridBagConstraints();
 		gbc_lblTelefono.anchor = GridBagConstraints.WEST;
@@ -176,8 +192,9 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(textFieldTelefono, gbc_textFieldTelefono);
 		textFieldTelefono.setColumns(10);
 		
-		JButton btnBorrarTelefono = new JButton("-");
+		JButton btnBorrarTelefono = new JButton("");
 		btnBorrarTelefono.setFocusable(false);
+		btnBorrarTelefono.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarTelefono.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarTelefono = new GridBagConstraints();
 		gbc_btnBorrarTelefono.insets = new Insets(0, 0, 5, 0);
@@ -186,6 +203,7 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(btnBorrarTelefono, gbc_btnBorrarTelefono);
 		
 		JLabel lblNumeroSocio = new JLabel("Numero Socio");
+		lblNumeroSocio.setFocusable(false);
 		lblNumeroSocio.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblNumeroSocio = new GridBagConstraints();
 		gbc_lblNumeroSocio.anchor = GridBagConstraints.WEST;
@@ -203,8 +221,9 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(textFieldNumeroSocio, gbc_textFieldNumeroSocio);
 		textFieldNumeroSocio.setColumns(10);
 		
-		JButton btnBorrarNumeroSocio = new JButton("-");
+		JButton btnBorrarNumeroSocio = new JButton("");
 		btnBorrarNumeroSocio.setFocusable(false);
+		btnBorrarNumeroSocio.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarNumeroSocio.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarNumeroSocio = new GridBagConstraints();
 		gbc_btnBorrarNumeroSocio.insets = new Insets(0, 0, 5, 0);
@@ -213,6 +232,7 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(btnBorrarNumeroSocio, gbc_btnBorrarNumeroSocio);
 		
 		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setFocusable(false);
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
 		gbc_lblEmail.anchor = GridBagConstraints.WEST;
@@ -230,8 +250,9 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(textFieldEmail, gbc_textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
-		JButton btnBorrarEmail = new JButton("-");
+		JButton btnBorrarEmail = new JButton("");
 		btnBorrarEmail.setFocusable(false);
+		btnBorrarEmail.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarEmail.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarEmail = new GridBagConstraints();
 		gbc_btnBorrarEmail.insets = new Insets(0, 0, 5, 0);
@@ -250,6 +271,7 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(separator, gbc_separator);
 		
 		JLabel lblDeporte = new JLabel("Deporte");
+		lblDeporte.setFocusable(false);
 		lblDeporte.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblDeporte = new GridBagConstraints();
 		gbc_lblDeporte.anchor = GridBagConstraints.WEST;
@@ -267,19 +289,19 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(panelDeportes, gbc_panelDeportes);
 		
 		JCheckBox chckbxBsquet = new JCheckBox("B\u00E1squet");
-		chckbxBsquet.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		chckbxBsquet.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panelDeportes.add(chckbxBsquet);
 		
 		JCheckBox chckbxFtbol = new JCheckBox("F\u00FAtbol");
-		chckbxFtbol.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		chckbxFtbol.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panelDeportes.add(chckbxFtbol);
 		
 		JCheckBox chckbxVoley = new JCheckBox("Voley");
-		chckbxVoley.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		chckbxVoley.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panelDeportes.add(chckbxVoley);
 		
 		JCheckBox chckbxCestoball = new JCheckBox("Cestoball");
-		chckbxCestoball.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		chckbxCestoball.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panelDeportes.add(chckbxCestoball);
 		
 		JSeparator separator_1 = new JSeparator();
@@ -293,6 +315,7 @@ public class AñadirSocio extends JPanel {
 		panel_1.add(separator_1, gbc_separator_1);
 		
 		JLabel lblTipoSocio = new JLabel("Tipo Socio");
+		lblTipoSocio.setFocusable(false);
 		lblTipoSocio.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_lblTipoSocio = new GridBagConstraints();
 		gbc_lblTipoSocio.anchor = GridBagConstraints.WEST;
@@ -311,15 +334,15 @@ public class AñadirSocio extends JPanel {
 		
 		
 		JRadioButton rdbtnDeportista = new JRadioButton("Deportista");
-		rdbtnDeportista.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		rdbtnDeportista.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panelTipoSocio.add(rdbtnDeportista);
 		
 		JRadioButton rdbtnProtector = new JRadioButton("Protector");
-		rdbtnProtector.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		rdbtnProtector.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panelTipoSocio.add(rdbtnProtector);
 		
 		JRadioButton rdbtnVitalicio = new JRadioButton("Vitalicio");
-		rdbtnVitalicio.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		rdbtnVitalicio.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panelTipoSocio.add(rdbtnVitalicio);
 		
 		
