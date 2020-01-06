@@ -1,4 +1,4 @@
-package vista;
+package vista.añadirVista;
 
 import java.awt.*;
 
@@ -6,9 +6,12 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
-public class AñadirSocio extends JPanel {
+public class AñadirSocio extends JPanel implements ActionListener{
+	
 
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellido;
@@ -31,24 +34,43 @@ public class AñadirSocio extends JPanel {
 		lblTitulo.setFocusable(false);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		//lblTitulo.setIcon(new ImageIcon("src/resources/identificacion2.png"));
 		lblTitulo.setIcon(new ImageIcon(getClass().getResource("/identificacion2.png")));
 		this.add(lblTitulo, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
 		panel.setFocusable(false);
 		this.add(panel, BorderLayout.SOUTH);
-		panel.setLayout(new FlowLayout(FlowLayout.TRAILING, 5, 5));
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		
+		JButton btnAyuda = new JButton("Ayuda");
+		btnAyuda.setActionCommand("Ayuda");
+		btnAyuda.addActionListener(this);
+		btnAyuda.setFocusable(false);
+		btnAyuda.setIcon(new ImageIcon(AñadirSocio.class.getResource("/javax/swing/plaf/metal/icons/ocean/question.png")));
+		btnAyuda.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		//panel.add(btnAyuda);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		btnConfirmar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnConfirmar.setIcon(new ImageIcon(getClass().getResource("/comprobar.png")));
-		panel.add(btnConfirmar);
+		//panel.add(btnConfirmar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnCancelar.setIcon(new ImageIcon(getClass().getResource("/cancelar.png")));
-		panel.add(btnCancelar);
+		//panel.add(btnCancelar);
+		
+		//Creamos el layout de abajo
+		//la caja crea las restricciones añadimos los componentes que estaran dentro y luego la caja se añade al panel.
+		Box box = Box.createHorizontalBox();
+		box.add(btnAyuda);
+		box.add(Box.createHorizontalGlue());
+		box.add(btnConfirmar);
+		box.add(Box.createHorizontalStrut(5));
+		box.add(btnCancelar);
+		
+		panel.add(box);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setFocusable(false);
@@ -364,6 +386,16 @@ public class AñadirSocio extends JPanel {
 		grupoTipoSocio.add(rdbtnProtector);
 		grupoTipoSocio.add(rdbtnVitalicio);
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getActionCommand().equals("Ayuda")){
+			//Creamos el JDialog
+			new AyudaDialog(this);
+		}
+		
 	}
 
 }
