@@ -1,13 +1,33 @@
 package vista.añadirVista;
 
-import java.awt.*;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
-import com.sun.glass.events.KeyEvent;
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.KeyEvent;
+
 
 
 public class AñadirSocio extends JPanel implements ActionListener{
@@ -16,6 +36,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 	private static final String msgAyuda="<ul><li>Utiliza Tab para navegar entre los campos</li><li>Shift+Tab para retroceder</li><li>Espacio para clic</li></ul>";
 	
 
+	private JTextField Apellido;
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellido;
 	private JTextField textFieldDireccion;
@@ -23,6 +44,9 @@ public class AñadirSocio extends JPanel implements ActionListener{
 	private JTextField textFieldTelefono;
 	private JTextField textFieldNumeroSocio;
 	private JTextField textFieldEmail;
+	private JTextField txtNombreIncorrecto;
+	private JTextField txtApellidoIncorrecto;
+	private JTextField txtEmailIncorrecto;
 
 	/**
 	 * Create the panel.
@@ -54,6 +78,10 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		//panel.add(btnAyuda);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnConfirmar.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		btnConfirmar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnConfirmar.setIcon(new ImageIcon(getClass().getResource("/comprobar.png")));
@@ -75,15 +103,15 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		
 		panel.add(box);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setFocusable(false);
-		this.add(panel_1, BorderLayout.CENTER);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{82, 101, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
-		panel_1.setLayout(gbl_panel_1);
+		JPanel panel1 = new JPanel();
+		panel1.setFocusable(false);
+		this.add(panel1, BorderLayout.CENTER);
+		GridBagLayout gbl_panel1 = new GridBagLayout();
+		gbl_panel1.columnWidths = new int[]{82, 101, 0, 0};
+		gbl_panel1.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel1.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel1.rowWeights = new double[]{1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		panel1.setLayout(gbl_panel1);
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setFocusable(false);
@@ -93,16 +121,38 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNombre.gridx = 0;
 		gbc_lblNombre.gridy = 0;
-		panel_1.add(lblNombre, gbc_lblNombre);
+		panel1.add(lblNombre, gbc_lblNombre);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if((textFieldNombre.getText() != null) 
+		                && (textFieldNombre.getText().matches("^[a-zA-Z ]*$")))
+				{
+					txtNombreIncorrecto.setVisible(false);
+					panel1.revalidate();
+					panel1.repaint();
+					
+					
+				}
+				else{
+				textFieldNombre.requestFocusInWindow();
+				txtNombreIncorrecto.setVisible(true);};
+				panel1.revalidate();
+				panel1.repaint();
+				
+			}
+			
+		});
+		textFieldNombre.setInputVerifier(new Verficador());
 		textFieldNombre.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldNombre = new GridBagConstraints();
 		gbc_textFieldNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldNombre.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldNombre.gridx = 1;
 		gbc_textFieldNombre.gridy = 0;
-		panel_1.add(textFieldNombre, gbc_textFieldNombre);
+		panel1.add(textFieldNombre, gbc_textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		JButton btnBorrarNombre = new JButton("");
@@ -113,7 +163,19 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_btnBorrarNombre.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBorrarNombre.gridx = 2;
 		gbc_btnBorrarNombre.gridy = 0;
-		panel_1.add(btnBorrarNombre, gbc_btnBorrarNombre);
+		panel1.add(btnBorrarNombre, gbc_btnBorrarNombre);
+		
+		txtNombreIncorrecto = new JTextField();
+		txtNombreIncorrecto.setBackground(Color.RED);
+		txtNombreIncorrecto.setVisible(false);
+		txtNombreIncorrecto.setText("Nombre incorrecto");
+		GridBagConstraints gbc_txtNombreIncorrecto = new GridBagConstraints();
+		gbc_txtNombreIncorrecto.insets = new Insets(0, 0, 5, 5);
+		gbc_txtNombreIncorrecto.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtNombreIncorrecto.gridx = 1;
+		gbc_txtNombreIncorrecto.gridy = 1;
+		panel1.add(txtNombreIncorrecto, gbc_txtNombreIncorrecto);
+		txtNombreIncorrecto.setColumns(10);
 		
 		JLabel lblApellido = new JLabel("Apellido");
 		lblApellido.setFocusable(false);
@@ -122,17 +184,38 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_lblApellido.anchor = GridBagConstraints.WEST;
 		gbc_lblApellido.insets = new Insets(0, 0, 5, 5);
 		gbc_lblApellido.gridx = 0;
-		gbc_lblApellido.gridy = 1;
-		panel_1.add(lblApellido, gbc_lblApellido);
+		gbc_lblApellido.gridy = 2;
+		panel1.add(lblApellido, gbc_lblApellido);
 		
 		textFieldApellido = new JTextField();
+		textFieldApellido.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if((textFieldApellido.getText() != null) 
+		                && (textFieldApellido.getText().matches("^[a-zA-Z ]*$")))
+				{
+					txtApellidoIncorrecto.setVisible(false);
+					panel1.revalidate();
+					panel1.repaint();
+					
+					
+				}
+				else{
+				textFieldApellido.requestFocusInWindow();
+				txtApellidoIncorrecto.setVisible(true);};
+				panel1.revalidate();
+				panel1.repaint();
+				
+			}
+			
+		});
 		textFieldApellido.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldApellido = new GridBagConstraints();
 		gbc_textFieldApellido.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldApellido.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldApellido.gridx = 1;
-		gbc_textFieldApellido.gridy = 1;
-		panel_1.add(textFieldApellido, gbc_textFieldApellido);
+		gbc_textFieldApellido.gridy = 2;
+		panel1.add(textFieldApellido, gbc_textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
 		JButton btnBorrarApellido = new JButton("");
@@ -142,8 +225,20 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		GridBagConstraints gbc_btnBorrarApellido = new GridBagConstraints();
 		gbc_btnBorrarApellido.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBorrarApellido.gridx = 2;
-		gbc_btnBorrarApellido.gridy = 1;
-		panel_1.add(btnBorrarApellido, gbc_btnBorrarApellido);
+		gbc_btnBorrarApellido.gridy = 2;
+		panel1.add(btnBorrarApellido, gbc_btnBorrarApellido);
+		
+		txtApellidoIncorrecto = new JTextField();
+		txtApellidoIncorrecto.setVisible(false);
+		txtApellidoIncorrecto.setBackground(Color.RED);
+		txtApellidoIncorrecto.setText("Apellido incorrecto");
+		GridBagConstraints gbc_txtApellidoIncorrecto = new GridBagConstraints();
+		gbc_txtApellidoIncorrecto.insets = new Insets(0, 0, 5, 5);
+		gbc_txtApellidoIncorrecto.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtApellidoIncorrecto.gridx = 1;
+		gbc_txtApellidoIncorrecto.gridy = 3;
+		panel1.add(txtApellidoIncorrecto, gbc_txtApellidoIncorrecto);
+		txtApellidoIncorrecto.setColumns(10);
 		
 		JLabel lblDireccion = new JLabel("Direccion");
 		lblDireccion.setFocusable(false);
@@ -152,8 +247,8 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_lblDireccion.anchor = GridBagConstraints.WEST;
 		gbc_lblDireccion.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDireccion.gridx = 0;
-		gbc_lblDireccion.gridy = 2;
-		panel_1.add(lblDireccion, gbc_lblDireccion);
+		gbc_lblDireccion.gridy = 4;
+		panel1.add(lblDireccion, gbc_lblDireccion);
 		
 		textFieldDireccion = new JTextField();
 		textFieldDireccion.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -161,8 +256,8 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_textFieldDireccion.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldDireccion.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldDireccion.gridx = 1;
-		gbc_textFieldDireccion.gridy = 2;
-		panel_1.add(textFieldDireccion, gbc_textFieldDireccion);
+		gbc_textFieldDireccion.gridy = 4;
+		panel1.add(textFieldDireccion, gbc_textFieldDireccion);
 		textFieldDireccion.setColumns(10);
 		
 		JButton btnBorrarDireccion = new JButton("");
@@ -172,8 +267,8 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		GridBagConstraints gbc_btnBorrarDireccion = new GridBagConstraints();
 		gbc_btnBorrarDireccion.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBorrarDireccion.gridx = 2;
-		gbc_btnBorrarDireccion.gridy = 2;
-		panel_1.add(btnBorrarDireccion, gbc_btnBorrarDireccion);
+		gbc_btnBorrarDireccion.gridy = 4;
+		panel1.add(btnBorrarDireccion, gbc_btnBorrarDireccion);
 		
 		JLabel lblDni = new JLabel("DNI");
 		lblDni.setFocusable(false);
@@ -182,17 +277,39 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_lblDni.anchor = GridBagConstraints.WEST;
 		gbc_lblDni.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDni.gridx = 0;
-		gbc_lblDni.gridy = 3;
-		panel_1.add(lblDni, gbc_lblDni);
+		gbc_lblDni.gridy = 5;
+		panel1.add(lblDni, gbc_lblDni);
 		
 		textFieldDNI = new JTextField();
+		textFieldDNI.addActionListener(new ActionListener() {
+			   public void actionPerformed(ActionEvent e) {
+			      
+			    }
+			   });
+		
+		textFieldDNI.addKeyListener(new KeyAdapter() {
+	         public void keyPressed(KeyEvent ke) {
+	            String value = textFieldDNI.getText();
+	            char c = ke.getKeyChar();
+	           
+	            if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || (c == KeyEvent.VK_BACK_SPACE) ||
+	            	     (c == KeyEvent.VK_DELETE)||(c == KeyEvent.VK_ENTER)) {
+	            	textFieldDNI.setEditable(true);
+	             
+	            } else {
+	            	textFieldDNI.setEditable(false);
+	            
+	              	            }
+	         }
+	      });
+		
 		textFieldDNI.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldDNI = new GridBagConstraints();
 		gbc_textFieldDNI.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldDNI.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldDNI.gridx = 1;
-		gbc_textFieldDNI.gridy = 3;
-		panel_1.add(textFieldDNI, gbc_textFieldDNI);
+		gbc_textFieldDNI.gridy = 5;
+		panel1.add(textFieldDNI, gbc_textFieldDNI);
 		textFieldDNI.setColumns(10);
 		
 		JButton btnBorrarDNI = new JButton("");
@@ -202,8 +319,8 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		GridBagConstraints gbc_btnBorrarDNI = new GridBagConstraints();
 		gbc_btnBorrarDNI.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBorrarDNI.gridx = 2;
-		gbc_btnBorrarDNI.gridy = 3;
-		panel_1.add(btnBorrarDNI, gbc_btnBorrarDNI);
+		gbc_btnBorrarDNI.gridy = 5;
+		panel1.add(btnBorrarDNI, gbc_btnBorrarDNI);
 		
 		JLabel lblTelefono = new JLabel("Telefono");
 		lblTelefono.setFocusable(false);
@@ -212,17 +329,32 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_lblTelefono.anchor = GridBagConstraints.WEST;
 		gbc_lblTelefono.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTelefono.gridx = 0;
-		gbc_lblTelefono.gridy = 4;
-		panel_1.add(lblTelefono, gbc_lblTelefono);
+		gbc_lblTelefono.gridy = 7;
+		panel1.add(lblTelefono, gbc_lblTelefono);
 		
 		textFieldTelefono = new JTextField();
+		textFieldTelefono.addKeyListener(new KeyAdapter() {
+	         public void keyPressed(KeyEvent ke) {
+	            String value = textFieldTelefono.getText();
+	            char c = ke.getKeyChar();
+	           
+	            if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || (c == KeyEvent.VK_BACK_SPACE) ||
+	            	     (c == KeyEvent.VK_DELETE)||(c == KeyEvent.VK_ENTER)) {
+	            	textFieldTelefono.setEditable(true);
+	             
+	            } else {
+	            	textFieldTelefono.setEditable(false);
+	            
+	              	            }
+	         }
+	      });
 		textFieldTelefono.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldTelefono = new GridBagConstraints();
 		gbc_textFieldTelefono.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldTelefono.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldTelefono.gridx = 1;
-		gbc_textFieldTelefono.gridy = 4;
-		panel_1.add(textFieldTelefono, gbc_textFieldTelefono);
+		gbc_textFieldTelefono.gridy = 7;
+		panel1.add(textFieldTelefono, gbc_textFieldTelefono);
 		textFieldTelefono.setColumns(10);
 		
 		JButton btnBorrarTelefono = new JButton("");
@@ -232,8 +364,8 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		GridBagConstraints gbc_btnBorrarTelefono = new GridBagConstraints();
 		gbc_btnBorrarTelefono.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBorrarTelefono.gridx = 2;
-		gbc_btnBorrarTelefono.gridy = 4;
-		panel_1.add(btnBorrarTelefono, gbc_btnBorrarTelefono);
+		gbc_btnBorrarTelefono.gridy = 7;
+		panel1.add(btnBorrarTelefono, gbc_btnBorrarTelefono);
 		
 		JLabel lblNumeroSocio = new JLabel("Numero Socio");
 		lblNumeroSocio.setFocusable(false);
@@ -242,8 +374,8 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_lblNumeroSocio.anchor = GridBagConstraints.WEST;
 		gbc_lblNumeroSocio.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNumeroSocio.gridx = 0;
-		gbc_lblNumeroSocio.gridy = 5;
-		panel_1.add(lblNumeroSocio, gbc_lblNumeroSocio);
+		gbc_lblNumeroSocio.gridy = 8;
+		panel1.add(lblNumeroSocio, gbc_lblNumeroSocio);
 		
 		textFieldNumeroSocio = new JTextField();
 		textFieldNumeroSocio.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -251,8 +383,8 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_textFieldNumeroSocio.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldNumeroSocio.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldNumeroSocio.gridx = 1;
-		gbc_textFieldNumeroSocio.gridy = 5;
-		panel_1.add(textFieldNumeroSocio, gbc_textFieldNumeroSocio);
+		gbc_textFieldNumeroSocio.gridy = 8;
+		panel1.add(textFieldNumeroSocio, gbc_textFieldNumeroSocio);
 		textFieldNumeroSocio.setColumns(10);
 		
 		JButton btnBorrarNumeroSocio = new JButton("");
@@ -262,8 +394,8 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		GridBagConstraints gbc_btnBorrarNumeroSocio = new GridBagConstraints();
 		gbc_btnBorrarNumeroSocio.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBorrarNumeroSocio.gridx = 2;
-		gbc_btnBorrarNumeroSocio.gridy = 5;
-		panel_1.add(btnBorrarNumeroSocio, gbc_btnBorrarNumeroSocio);
+		gbc_btnBorrarNumeroSocio.gridy = 8;
+		panel1.add(btnBorrarNumeroSocio, gbc_btnBorrarNumeroSocio);
 		
 		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setFocusable(false);
@@ -272,17 +404,39 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_lblEmail.anchor = GridBagConstraints.WEST;
 		gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_lblEmail.gridx = 0;
-		gbc_lblEmail.gridy = 6;
-		panel_1.add(lblEmail, gbc_lblEmail);
+		gbc_lblEmail.gridy = 9;
+		panel1.add(lblEmail, gbc_lblEmail);
 		
 		textFieldEmail = new JTextField();
+		textFieldEmail.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if((textFieldEmail.getText() != null) 
+		                && (textFieldEmail.getText().matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+		        			    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")))
+				{
+					txtEmailIncorrecto.setVisible(false);
+					panel1.revalidate();
+					panel1.repaint();
+					
+					
+				}
+				else{
+				textFieldEmail.requestFocusInWindow();
+				txtEmailIncorrecto.setVisible(true);};
+				panel1.revalidate();
+				panel1.repaint();
+				
+			}
+			
+		});
 		textFieldEmail.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldEmail = new GridBagConstraints();
 		gbc_textFieldEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldEmail.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldEmail.gridx = 1;
-		gbc_textFieldEmail.gridy = 6;
-		panel_1.add(textFieldEmail, gbc_textFieldEmail);
+		gbc_textFieldEmail.gridy = 9;
+		panel1.add(textFieldEmail, gbc_textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
 		JButton btnBorrarEmail = new JButton("");
@@ -292,8 +446,20 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		GridBagConstraints gbc_btnBorrarEmail = new GridBagConstraints();
 		gbc_btnBorrarEmail.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBorrarEmail.gridx = 2;
-		gbc_btnBorrarEmail.gridy = 6;
-		panel_1.add(btnBorrarEmail, gbc_btnBorrarEmail);
+		gbc_btnBorrarEmail.gridy = 9;
+		panel1.add(btnBorrarEmail, gbc_btnBorrarEmail);
+		
+		txtEmailIncorrecto = new JTextField();
+		txtEmailIncorrecto.setVisible(false);
+		txtEmailIncorrecto.setBackground(Color.RED);
+		txtEmailIncorrecto.setText("Email Incorrecto");
+		GridBagConstraints gbc_txtEmailIncorrecto = new GridBagConstraints();
+		gbc_txtEmailIncorrecto.insets = new Insets(0, 0, 5, 5);
+		gbc_txtEmailIncorrecto.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtEmailIncorrecto.gridx = 1;
+		gbc_txtEmailIncorrecto.gridy = 10;
+		panel1.add(txtEmailIncorrecto, gbc_txtEmailIncorrecto);
+		txtEmailIncorrecto.setColumns(10);
 		
 		JSeparator separator = new JSeparator();
 		GridBagConstraints gbc_separator = new GridBagConstraints();
@@ -302,8 +468,8 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_separator.fill = GridBagConstraints.HORIZONTAL;
 		gbc_separator.insets = new Insets(0, 0, 5, 0);
 		gbc_separator.gridx = 0;
-		gbc_separator.gridy = 7;
-		panel_1.add(separator, gbc_separator);
+		gbc_separator.gridy = 11;
+		panel1.add(separator, gbc_separator);
 		
 		JLabel lblDeporte = new JLabel("Deporte");
 		lblDeporte.setFocusable(false);
@@ -312,16 +478,16 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_lblDeporte.anchor = GridBagConstraints.WEST;
 		gbc_lblDeporte.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDeporte.gridx = 0;
-		gbc_lblDeporte.gridy = 8;
-		panel_1.add(lblDeporte, gbc_lblDeporte);
+		gbc_lblDeporte.gridy = 12;
+		panel1.add(lblDeporte, gbc_lblDeporte);
 		
 		JPanel panelDeportes = new JPanel();
 		GridBagConstraints gbc_panelDeportes = new GridBagConstraints();
 		gbc_panelDeportes.insets = new Insets(0, 0, 5, 5);
 		gbc_panelDeportes.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelDeportes.gridx = 1;
-		gbc_panelDeportes.gridy = 8;
-		panel_1.add(panelDeportes, gbc_panelDeportes);
+		gbc_panelDeportes.gridy = 12;
+		panel1.add(panelDeportes, gbc_panelDeportes);
 		
 		JCheckBox chckbxBsquet = new JCheckBox("B\u00E1squet");
 		chckbxBsquet.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -346,8 +512,8 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_separator_1.gridwidth = 3;
 		gbc_separator_1.insets = new Insets(0, 0, 5, 0);
 		gbc_separator_1.gridx = 0;
-		gbc_separator_1.gridy = 9;
-		panel_1.add(separator_1, gbc_separator_1);
+		gbc_separator_1.gridy = 13;
+		panel1.add(separator_1, gbc_separator_1);
 		
 		JLabel lblTipoSocio = new JLabel("Tipo Socio");
 		lblTipoSocio.setFocusable(false);
@@ -357,16 +523,16 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_lblTipoSocio.anchor = GridBagConstraints.WEST;
 		gbc_lblTipoSocio.insets = new Insets(0, 0, 0, 5);
 		gbc_lblTipoSocio.gridx = 0;
-		gbc_lblTipoSocio.gridy = 10;
-		panel_1.add(lblTipoSocio, gbc_lblTipoSocio);
+		gbc_lblTipoSocio.gridy = 14;
+		panel1.add(lblTipoSocio, gbc_lblTipoSocio);
 		
 		JPanel panelTipoSocio = new JPanel();
 		GridBagConstraints gbc_panelTipoSocio = new GridBagConstraints();
 		gbc_panelTipoSocio.insets = new Insets(0, 0, 0, 5);
 		gbc_panelTipoSocio.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelTipoSocio.gridx = 1;
-		gbc_panelTipoSocio.gridy = 10;
-		panel_1.add(panelTipoSocio, gbc_panelTipoSocio);
+		gbc_panelTipoSocio.gridy = 14;
+		panel1.add(panelTipoSocio, gbc_panelTipoSocio);
 		
 		
 		JRadioButton rdbtnDeportista = new JRadioButton("Deportista");
