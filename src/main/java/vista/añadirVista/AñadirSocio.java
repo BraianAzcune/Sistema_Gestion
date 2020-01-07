@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 
 public class AñadirSocio extends JPanel implements ActionListener{
 	
+	//Mensajes que se crean en los Dialog
+	private static final String msgAyuda="<ul><li>Utiliza Tab para navegar entre los campos</li><li>Shift+Tab para retroceder</li><li>Espacio para clic</li></ul>";
+	
 
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellido;
@@ -393,7 +396,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		
 		if(e.getActionCommand().equals("Ayuda")){
 			//Creamos el JDialog
-			new AyudaDialog(this);
+			new InformacionDialog(this,msgAyuda);
 		}
 		
 	}

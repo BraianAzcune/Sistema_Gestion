@@ -23,7 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Insets;
 
-public class AyudaDialog extends JDialog implements ActionListener{
+public class InformacionDialog extends JDialog implements ActionListener{
 
 	private final JPanel contentPanel = new JPanel();
 
@@ -32,7 +32,7 @@ public class AyudaDialog extends JDialog implements ActionListener{
 	/**
 	 * Create the dialog.
 	 */
-	public AyudaDialog(JPanel Padre) {
+	public InformacionDialog(JPanel Padre,String mensaje) {
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 		setBounds(100, 100, 463, 198);
@@ -48,11 +48,7 @@ public class AyudaDialog extends JDialog implements ActionListener{
 			textPane.setContentType("text/html");
 			textPane.setFocusable(false);
 			textPane.setText("<html bgcolor=\"#f0f0f0\"><font face=\"arial\" size='5' color=rgb(1,1,1)>"
-					+ "<ul>\r\n" + 
-					"  <li>Utiliza Tab para navegar entre los campos</li>\r\n" + 
-					"  <li>Shift+Tab para retroceder</li>\r\n" + 
-					"  <li>Espacio para clic</li>\r\n" + 
-					"</ul></font></html>");
+					+mensaje+ "</font></html>");
 			textPane.setFont(new Font("Tahoma", Font.PLAIN, 18));
 			textPane.setBackground(SystemColor.control);
 			textPane.setEditable(false);
