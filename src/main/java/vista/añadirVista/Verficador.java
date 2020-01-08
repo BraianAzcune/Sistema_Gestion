@@ -29,7 +29,7 @@ public class Verficador extends InputVerifier {
 			try
 
 			{
-                                // Si se puede convertir en entero, está bien
+                               
 				if((texto != null) 
 		                && (!texto.equals("")) 
 		                && (texto.matches("^[a-zA-Z]*$")))
@@ -44,7 +44,7 @@ public class Verficador extends InputVerifier {
 			catch (Exception e)
 
 			{
-                                // Si no se ha podido convertir a entero, mostramos
+                                
                                 // una ventana de error y devolvemos false
 				editor.setVisible(true);
 				JOptionPane.showMessageDialog(editor, "No es un número");

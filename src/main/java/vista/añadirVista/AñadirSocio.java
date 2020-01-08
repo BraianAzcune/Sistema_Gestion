@@ -124,6 +124,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		panel1.add(lblNombre, gbc_lblNombre);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.setDocument(new JTextFieldLimit(18));
 		textFieldNombre.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -188,6 +189,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		panel1.add(lblApellido, gbc_lblApellido);
 		
 		textFieldApellido = new JTextField();
+		textFieldApellido.setDocument(new JTextFieldLimit(18));
 		textFieldApellido.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -251,6 +253,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		panel1.add(lblDireccion, gbc_lblDireccion);
 		
 		textFieldDireccion = new JTextField();
+		textFieldDireccion.setDocument(new JTextFieldLimit(36));
 		textFieldDireccion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_textFieldDireccion = new GridBagConstraints();
 		gbc_textFieldDireccion.insets = new Insets(0, 0, 5, 5);
@@ -281,15 +284,16 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		panel1.add(lblDni, gbc_lblDni);
 		
 		textFieldDNI = new JTextField();
+		textFieldDNI.setDocument(new JTextFieldLimit(9));
 		textFieldDNI.addActionListener(new ActionListener() {
 			   public void actionPerformed(ActionEvent e) {
-			      
+				   
 			    }
 			   });
 		
 		textFieldDNI.addKeyListener(new KeyAdapter() {
 	         public void keyPressed(KeyEvent ke) {
-	            String value = textFieldDNI.getText();
+	        	 String value = textFieldDNI.getText();
 	            char c = ke.getKeyChar();
 	           
 	            if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || (c == KeyEvent.VK_BACK_SPACE) ||
@@ -298,9 +302,11 @@ public class AñadirSocio extends JPanel implements ActionListener{
 	             
 	            } else {
 	            	textFieldDNI.setEditable(false);
-	            
-	              	            }
-	         }
+	                   }
+	           
+	           
+	         
+	         };
 	      });
 		
 		textFieldDNI.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -333,6 +339,15 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		panel1.add(lblTelefono, gbc_lblTelefono);
 		
 		textFieldTelefono = new JTextField();
+		
+		
+		//con la clases  JTextFieldLimit LIMITAMOS los text field en este caso a 12 solo cambiar el numero para cambiar el limite
+		// no toque la clase JTextFieldLimit solo la implemente
+		textFieldTelefono.setDocument(new JTextFieldLimit(12));
+		
+		
+		
+		//Control de teclas, solo permite numeros y el de borrar y enter 
 		textFieldTelefono.addKeyListener(new KeyAdapter() {
 	         public void keyPressed(KeyEvent ke) {
 	            String value = textFieldTelefono.getText();
