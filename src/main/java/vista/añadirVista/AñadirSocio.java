@@ -27,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 
@@ -157,6 +159,12 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		textFieldNombre.setColumns(10);
 		
 		JButton btnBorrarNombre = new JButton("");
+		btnBorrarNombre.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				textFieldNombre.setText("");
+			}
+		});
 		btnBorrarNombre.setFocusable(false);
 		btnBorrarNombre.setToolTipText("Borrar campo");
 		btnBorrarNombre.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
@@ -221,6 +229,12 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		textFieldApellido.setColumns(10);
 		
 		JButton btnBorrarApellido = new JButton("");
+		btnBorrarApellido.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				textFieldApellido.setText("");
+			}
+		});
 		btnBorrarApellido.setFocusable(false);
 		btnBorrarApellido.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarApellido.setToolTipText("Borrar campo");
@@ -264,6 +278,13 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		textFieldDireccion.setColumns(10);
 		
 		JButton btnBorrarDireccion = new JButton("");
+		btnBorrarDireccion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				textFieldDireccion.setText("");
+			}
+			
+		});
 		btnBorrarDireccion.setFocusable(false);
 		btnBorrarDireccion.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarDireccion.setToolTipText("Borrar campo");
@@ -319,6 +340,12 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		textFieldDNI.setColumns(10);
 		
 		JButton btnBorrarDNI = new JButton("");
+		btnBorrarDNI.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				textFieldDNI.setText("");
+			}
+		});
 		btnBorrarDNI.setFocusable(false);
 		btnBorrarDNI.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarDNI.setToolTipText("Borrar campo");
@@ -373,6 +400,16 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		textFieldTelefono.setColumns(10);
 		
 		JButton btnBorrarTelefono = new JButton("");
+		btnBorrarTelefono.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				textFieldTelefono.setText("");
+			}
+		});
+		btnBorrarTelefono.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnBorrarTelefono.setFocusable(false);
 		btnBorrarTelefono.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarTelefono.setToolTipText("Borrar campo");
@@ -403,6 +440,12 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		textFieldNumeroSocio.setColumns(10);
 		
 		JButton btnBorrarNumeroSocio = new JButton("");
+		btnBorrarNumeroSocio.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				textFieldNumeroSocio.setText("");
+			}
+		});
 		btnBorrarNumeroSocio.setFocusable(false);
 		btnBorrarNumeroSocio.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarNumeroSocio.setToolTipText("Borrar campo");
@@ -455,6 +498,16 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		textFieldEmail.setColumns(10);
 		
 		JButton btnBorrarEmail = new JButton("");
+		btnBorrarEmail.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				textFieldEmail.setText("");
+			}
+		});
+		btnBorrarEmail.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnBorrarEmail.setFocusable(false);
 		btnBorrarEmail.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
 		btnBorrarEmail.setToolTipText("Borrar campo");
