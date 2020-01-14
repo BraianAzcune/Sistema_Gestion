@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+			<outputPatternAsHeader>true</outputPatternAsHeader>
+		</encoder>
+	</appender>
+
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>LOGS/logFile.log</file>
+		<!-- Deniega los niveles que esten por debajo de INFO (debug y trace) -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>LOGS/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history capped at 3GB total size -->
+			<maxHistory>30</maxHistory>
+			<totalSizeCap>3GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%-4relative [%d{HH:mm:ss.SSS}] [%thread] |%-5level| [%logger{35}] --> %msg%n</pattern>
+			
+		</encoder>
+	</appender>
+
+
+	<!--Este linea dice para que carpeta que nivel se registra -->
+	<!-- Por lo que cuando este en produccion esto se puede decir que registre 
+		solamente nivel warn (y error por cascada) -->
+	<!-- Si se le agrega un appender-ref, los se enviaran mensajes como se dicta 
+		ahi
+	<logger name="" level="warn"> <appender-ref ref="FILE" /> </logger> -->
+
+
+	<!-- Esto dice en que nivel trabaja aquellos que no estan alcanzado por 
+		las otras reglas si se pone level="OFF", se desactiva y se hacen caso a los 
+		reglas logger -->
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>

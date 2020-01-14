@@ -7,6 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 import vista.añadirVista.AñadirSocio;
 
 import javax.swing.GroupLayout;
@@ -36,6 +40,8 @@ import javax.swing.JSpinner;
 import javax.swing.JFormattedTextField;
 
 public class Principal extends JFrame {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Principal.class);
 
 	private JPanel layergruop;
 	private JTextField Nombre;
@@ -60,6 +66,7 @@ public class Principal extends JFrame {
 					Principal frame = new Principal();
 					frame.setVisible(true);
 				} catch (Exception e) {
+					LOGGER.error("\nError en la ventana principal=",e);
 					e.printStackTrace();
 				}
 			}
@@ -83,7 +90,7 @@ public class Principal extends JFrame {
 			}
 			catch (Exception e)
 			 {
-			  e.printStackTrace();
+			  LOGGER.error("Error en cambiarEstilos el estilo no esta (probablemente)=",e);
 			 }
 	}
 	
