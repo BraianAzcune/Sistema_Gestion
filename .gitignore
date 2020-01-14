@@ -4,6 +4,9 @@
 .settings/
 bin
 
+#LOGBACK
+LOGS/
+
 # Intellij
 .idea/
 *.iml
