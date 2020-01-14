@@ -63,7 +63,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		lblTitulo.setFocusable(false);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setIcon(new ImageIcon(getClass().getResource("/identificacion2.png")));
+		lblTitulo.setIcon(new ImageIcon(getClass().getResource("/imagenes/identificacion2.png")));
 		this.add(lblTitulo, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
@@ -86,12 +86,12 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		});
 		btnConfirmar.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		btnConfirmar.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnConfirmar.setIcon(new ImageIcon(getClass().getResource("/comprobar.png")));
+		btnConfirmar.setIcon(new ImageIcon(getClass().getResource("/imagenes/comprobar.png")));
 		//panel.add(btnConfirmar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnCancelar.setIcon(new ImageIcon(getClass().getResource("/cancelar.png")));
+		btnCancelar.setIcon(new ImageIcon(getClass().getResource("/imagenes/cancelar.png")));
 		//panel.add(btnCancelar);
 		
 		//Creamos el layout de abajo
@@ -167,7 +167,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		});
 		btnBorrarNombre.setFocusable(false);
 		btnBorrarNombre.setToolTipText("Borrar campo");
-		btnBorrarNombre.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
+		btnBorrarNombre.setIcon(new ImageIcon(getClass().getResource("/imagenes/eliminar.png")));
 		GridBagConstraints gbc_btnBorrarNombre = new GridBagConstraints();
 		gbc_btnBorrarNombre.insets = new Insets(0, 0, 5, 0);
 		gbc_btnBorrarNombre.gridx = 2;
@@ -236,7 +236,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 			}
 		});
 		btnBorrarApellido.setFocusable(false);
-		btnBorrarApellido.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
+		btnBorrarApellido.setIcon(new ImageIcon(getClass().getResource("/imagenes/eliminar.png")));
 		btnBorrarApellido.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarApellido = new GridBagConstraints();
 		gbc_btnBorrarApellido.insets = new Insets(0, 0, 5, 0);
@@ -286,7 +286,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 			
 		});
 		btnBorrarDireccion.setFocusable(false);
-		btnBorrarDireccion.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
+		btnBorrarDireccion.setIcon(new ImageIcon(getClass().getResource("/imagenes/eliminar.png")));
 		btnBorrarDireccion.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarDireccion = new GridBagConstraints();
 		gbc_btnBorrarDireccion.insets = new Insets(0, 0, 5, 0);
@@ -347,7 +347,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 			}
 		});
 		btnBorrarDNI.setFocusable(false);
-		btnBorrarDNI.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
+		btnBorrarDNI.setIcon(new ImageIcon(getClass().getResource("/imagenes/eliminar.png")));
 		btnBorrarDNI.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarDNI = new GridBagConstraints();
 		gbc_btnBorrarDNI.insets = new Insets(0, 0, 5, 0);
@@ -411,7 +411,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 			}
 		});
 		btnBorrarTelefono.setFocusable(false);
-		btnBorrarTelefono.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
+		btnBorrarTelefono.setIcon(new ImageIcon(getClass().getResource("/imagenes/eliminar.png")));
 		btnBorrarTelefono.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarTelefono = new GridBagConstraints();
 		gbc_btnBorrarTelefono.insets = new Insets(0, 0, 5, 0);
@@ -447,7 +447,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 			}
 		});
 		btnBorrarNumeroSocio.setFocusable(false);
-		btnBorrarNumeroSocio.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
+		btnBorrarNumeroSocio.setIcon(new ImageIcon(getClass().getResource("/imagenes/eliminar.png")));
 		btnBorrarNumeroSocio.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarNumeroSocio = new GridBagConstraints();
 		gbc_btnBorrarNumeroSocio.insets = new Insets(0, 0, 5, 0);
@@ -469,9 +469,9 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		textFieldEmail.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if((textFieldEmail.getText() != null) 
+				if(((textFieldEmail.getText() != null) 
 		                && (textFieldEmail.getText().matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-		        			    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")))
+		        			    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")))|| textFieldEmail.getText().equals(""))
 				{
 					txtEmailIncorrecto.setVisible(false);
 					panel1.revalidate();
@@ -509,7 +509,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 			}
 		});
 		btnBorrarEmail.setFocusable(false);
-		btnBorrarEmail.setIcon(new ImageIcon(getClass().getResource("/eliminar.png")));
+		btnBorrarEmail.setIcon(new ImageIcon(getClass().getResource("/imagenes/eliminar.png")));
 		btnBorrarEmail.setToolTipText("Borrar campo");
 		GridBagConstraints gbc_btnBorrarEmail = new GridBagConstraints();
 		gbc_btnBorrarEmail.insets = new Insets(0, 0, 5, 0);

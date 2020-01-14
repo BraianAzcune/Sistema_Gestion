@@ -95,7 +95,7 @@ public class Principal extends JFrame {
 		setTitle("Cultural Argentino");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 200, 786, 686);
-		setIconImage(new ImageIcon(getClass().getResource("/cultu.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource("/imagenes/cultu.png")).getImage());
 		//Incorporo al JFRAME Principal un panel AñadirSocio
 		JPanel panelAñadirSocio= new AñadirSocio();
 		add(panelAñadirSocio);
