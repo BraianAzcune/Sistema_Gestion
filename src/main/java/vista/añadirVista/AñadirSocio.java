@@ -37,8 +37,8 @@ public class AñadirSocio extends JPanel implements ActionListener{
 	//Mensajes que se crean en los Dialog
 	private static final String msgAyuda="<ul><li>Utiliza Tab para navegar entre los campos</li><li>Shift+Tab para retroceder</li><li>Espacio para clic</li></ul>";
 	
-
-	private JTextField Apellido;
+	
+	//Esto es lo que hay que cargar en la base de datos
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellido;
 	private JTextField textFieldDireccion;
@@ -46,6 +46,9 @@ public class AñadirSocio extends JPanel implements ActionListener{
 	private JTextField textFieldTelefono;
 	private JTextField textFieldNumeroSocio;
 	private JTextField textFieldEmail;
+	
+	
+	//mensajes que se muestran si escribe algo erroneo
 	private JTextField txtNombreIncorrecto;
 	private JTextField txtApellidoIncorrecto;
 	private JTextField txtEmailIncorrecto;

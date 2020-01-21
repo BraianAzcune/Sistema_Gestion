@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+import modelo.BaseDatos;
 import vista.añadirVista.AñadirSocio;
 
 import javax.swing.GroupLayout;
@@ -28,6 +28,8 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -64,6 +66,16 @@ public class Principal extends JFrame {
 			public void run() {
 				try {
 					Principal frame = new Principal();
+					frame.addWindowListener(new WindowAdapter() {
+						
+						@Override
+						public void windowClosing(WindowEvent e) {
+							BaseDatos.apagar();
+							super.windowClosing(e);
+						}
+					});
+					
+					
 					frame.setVisible(true);
 				} catch (Exception e) {
 					LOGGER.error("\nError en la ventana principal=",e);
