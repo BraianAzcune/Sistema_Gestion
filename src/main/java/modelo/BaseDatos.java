@@ -41,7 +41,7 @@ public class BaseDatos {
 	 */
 	public static Sql2o obtenerSql2o() {
 		if(Objects.isNull(sql2o)) {
-			sql2o= new Sql2o("jdbc:hsqldb:file:"+rutaDB+";shutdown=true", user, pass);
+			sql2o= new Sql2o("jdbc:hsqldb:file:"+rutaDB, user, pass);
 		}
 		return sql2o;
 	}
