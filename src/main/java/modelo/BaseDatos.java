@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Encapsula la inicializacion del objeto sql2o que sera estatico, ya que se reusara en toda la aplicacion
  * 
@@ -15,6 +17,7 @@ import org.sql2o.Sql2o;
  * @author braian
  *
  */
+@Slf4j
 public class BaseDatos {
 	
 	/**
@@ -26,7 +29,7 @@ public class BaseDatos {
 	
 	
 	
-	private static final Logger LOG = LoggerFactory.getLogger(BaseDatos.class);
+	private static final Logger log = LoggerFactory.getLogger(BaseDatos.class);
 	
 	private  static Sql2o sql2o;
 	
@@ -52,7 +55,7 @@ public class BaseDatos {
 	 * ademas se cierra la conexion
 	 */
 	public static void apagar() {
-		LOG.debug("Intentado apagar base datos");
+		log.debug("Intentado apagar base datos");
 		
 		if(Objects.nonNull(sql2o)) {
 			
@@ -62,12 +65,12 @@ public class BaseDatos {
 				con.getJdbcConnection().createStatement().execute("SHUTDOWN");
 				
 				con.close();
-				LOG.debug("apagada db --ok");
+				log.debug("apagada db --ok");
 			} catch (Exception e) {
-				LOG.error("La orden de cerrar la base de datos fallo= ",e);
+				log.error("La orden de cerrar la base de datos fallo= ",e);
 			}
 		}else {
-			LOG.debug("sql2o no inicializado, no se uso la base de datos");
+			log.debug("sql2o no inicializado, no se uso la base de datos");
 		}
 	}
 }

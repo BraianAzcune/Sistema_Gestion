@@ -1,4 +1,4 @@
-package vista.añadirVista;
+package vista.utilidades;
 
 
 import javax.swing.text.*;
@@ -8,7 +8,7 @@ public class JTextFieldLimit extends PlainDocument {
   // optional uppercase conversion
   private boolean toUppercase = false;
   
-  JTextFieldLimit(int limit) {
+  public JTextFieldLimit(int limit) {
    super();
    this.limit = limit;
    }

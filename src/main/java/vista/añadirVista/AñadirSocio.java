@@ -26,26 +26,36 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import controlador.ControladorAñadirSocio;
+import vista.utilidades.InformacionDialog;
+import vista.utilidades.JTextFieldLimit;
+import vista.utilidades.TextPrompt;
+import vista.utilidades.Verficador;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 
 
 public class AñadirSocio extends JPanel implements ActionListener{
+	
+	public  List<JCheckBox> arrayCheckBoxDeportes;
 	
 	//Mensajes que se crean en los Dialog
 	private static final String msgAyuda="<ul><li>Utiliza Tab para navegar entre los campos</li><li>Shift+Tab para retroceder</li><li>Espacio para clic</li></ul>";
 	
 	
 	//Esto es lo que hay que cargar en la base de datos
-	private JTextField textFieldNombre;
-	private JTextField textFieldApellido;
-	private JTextField textFieldDireccion;
-	private JTextField textFieldDNI;
-	private JTextField textFieldTelefono;
-	private JTextField textFieldNumeroSocio;
-	private JTextField textFieldEmail;
+	public JTextField textFieldNombre;
+	public JTextField textFieldApellido;
+	public JTextField textFieldDireccion;
+	public JTextField textFieldDNI;
+	public JTextField textFieldTelefono;
+	public JTextField textFieldNumeroSocio;
+	public JTextField textFieldEmail;
 	
 	
 	//mensajes que se muestran si escribe algo erroneo
@@ -53,10 +63,28 @@ public class AñadirSocio extends JPanel implements ActionListener{
 	private JTextField txtApellidoIncorrecto;
 	private JTextField txtEmailIncorrecto;
 
+
+	private ControladorAñadirSocio controladorAñadir;
+
+
+	private JPanel panel1;
+
+	/**
+	 * Esto esta estatico, no es lo mejor ya que si se cambia la db haya que cambiar el codigo
+	 * pero no tiene pinta que se vaya a agregar otra categoria.
+	 * 
+	 * por lo tanto los valores de a que grupo de socio pertenece esta dado en como se agregaron
+	 * al grupo de botones, asi que que no se cambie el orden en que estan los radiobutton, sino se jode todo.
+	 */
+	private ButtonGroup grupoTipoSocio;
+
 	/**
 	 * Create the panel.
 	 */
 	public AñadirSocio() {
+		
+		controladorAñadir= new ControladorAñadirSocio(this);
+		
 		setFocusable(false);
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setLayout(new BorderLayout(0, 0));
@@ -80,22 +108,23 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		btnAyuda.setFocusable(false);
 		btnAyuda.setIcon(new ImageIcon(AñadirSocio.class.getResource("/javax/swing/plaf/metal/icons/ocean/question.png")));
 		btnAyuda.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		//panel.add(btnAyuda);
+		
 		
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controladorAñadir.añadirSocio();
 			}
 		});
 		btnConfirmar.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		btnConfirmar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnConfirmar.setIcon(new ImageIcon(getClass().getResource("/imagenes/comprobar.png")));
-		//panel.add(btnConfirmar);
+
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnCancelar.setIcon(new ImageIcon(getClass().getResource("/imagenes/cancelar.png")));
-		//panel.add(btnCancelar);
+
 		
 		//Creamos el layout de abajo
 		//la caja crea las restricciones añadimos los componentes que estaran dentro y luego la caja se añade al panel.
@@ -108,7 +137,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		
 		panel.add(box);
 		
-		JPanel panel1 = new JPanel();
+		panel1 = new JPanel();
 		panel1.setFocusable(false);
 		this.add(panel1, BorderLayout.CENTER);
 		GridBagLayout gbl_panel1 = new GridBagLayout();
@@ -309,11 +338,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		
 		textFieldDNI = new JTextField();
 		textFieldDNI.setDocument(new JTextFieldLimit(9));
-		textFieldDNI.addActionListener(new ActionListener() {
-			   public void actionPerformed(ActionEvent e) {
-				   
-			    }
-			   });
+
 		
 		textFieldDNI.addKeyListener(new KeyAdapter() {
 	         public void keyPressed(KeyEvent ke) {
@@ -441,6 +466,30 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_textFieldNumeroSocio.gridy = 8;
 		panel1.add(textFieldNumeroSocio, gbc_textFieldNumeroSocio);
 		textFieldNumeroSocio.setColumns(10);
+		
+		//CREAMOS PLACEHOLDER
+		TextPrompt placeholder = new TextPrompt("dejar en blanco, para asignacion automatica",textFieldNumeroSocio );
+	    placeholder.changeAlpha(0.4f);
+	    placeholder.changeStyle(Font.ITALIC);
+		
+		
+		textFieldNumeroSocio.addKeyListener(new KeyAdapter() {
+	         public void keyPressed(KeyEvent ke) {
+	        	 String value = textFieldNumeroSocio.getText();
+	            char c = ke.getKeyChar();
+	           
+	            if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || (c == KeyEvent.VK_BACK_SPACE) ||
+	            	     (c == KeyEvent.VK_DELETE)||(c == KeyEvent.VK_ENTER)) {
+	            	textFieldNumeroSocio.setEditable(true);
+	             
+	            } else {
+	            	textFieldNumeroSocio.setEditable(false);
+	                   }
+	           
+	           
+	         
+	         };
+	      });
 		
 		JButton btnBorrarNumeroSocio = new JButton("");
 		btnBorrarNumeroSocio.addMouseListener(new MouseAdapter() {
@@ -608,26 +657,41 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		
 		JRadioButton rdbtnDeportista = new JRadioButton("Deportista");
 		rdbtnDeportista.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		rdbtnDeportista.setSelected(true);
+		rdbtnDeportista.setActionCommand("0");
+		
 		panelTipoSocio.add(rdbtnDeportista);
 		
 		JRadioButton rdbtnProtector = new JRadioButton("Protector");
 		rdbtnProtector.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		rdbtnProtector.setActionCommand("1");
 		panelTipoSocio.add(rdbtnProtector);
 		
 		JRadioButton rdbtnVitalicio = new JRadioButton("Vitalicio");
 		rdbtnVitalicio.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		rdbtnVitalicio.setActionCommand("2");
 		panelTipoSocio.add(rdbtnVitalicio);
 		
 		
-		//Creo el GroupButton para que las opcines sean excluyentes
-		ButtonGroup grupoTipoSocio = new ButtonGroup();
+		grupoTipoSocio = new ButtonGroup();
 		//agrego los radiobutton
 		grupoTipoSocio.add(rdbtnDeportista);
 		grupoTipoSocio.add(rdbtnProtector);
 		grupoTipoSocio.add(rdbtnVitalicio);
 
 	}
-
+	
+	
+	/**
+	 * Esto esta hecho casero, si se llega a agregar una nueva categoria en la base de datos se rompe todo esto
+	 * o si se llega a cambiar los valores, no esta hecho de forma generica porque no lo amerita
+	 * 
+	 * @return entero que representa en la db que tipo de socio es (0,1,2)-> (depor,protec,vita)
+	 */
+	public int queTipoSocioEs() {
+		return Integer.parseInt(grupoTipoSocio.getSelection().getActionCommand());
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		

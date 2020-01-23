@@ -1,4 +1,4 @@
-package vista.añadirVista;
+package vista.utilidades;
 import javax.swing.InputVerifier;
 
 import javax.swing.JComponent;

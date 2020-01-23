@@ -1,4 +1,4 @@
-package vista.añadirVista;
+package vista.utilidades;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
