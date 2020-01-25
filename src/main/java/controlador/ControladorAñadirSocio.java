@@ -15,9 +15,11 @@ import org.sql2o.Query;
 
 import lombok.extern.slf4j.Slf4j;
 import modelo.BaseDatos;
-import modelo.dao.Socio;
-import modelo.dao.SocioXDeporte;
-import modelo.dao.SocioXDeporte.SocioXDeporteBuilder;
+import modelo.Deporte;
+import modelo.Socio;
+import modelo.SocioXDeporte;
+import modelo.SocioXDeporte.SocioXDeporteBuilder;
+import modelo.dao.DeporteDAO;
 import vista.añadirVista.AñadirSocio;
 
 /**
@@ -29,9 +31,18 @@ public class ControladorAñadirSocio {
 	
 	private AñadirSocio panel;
 	
+	
 	public ControladorAñadirSocio(AñadirSocio panel) {
 		this.panel=panel;
+		
+		
 	}
+	
+	public List<Deporte> ObtenerListaDeportes() {
+		DeporteDAO dao= new DeporteDAO();
+		return dao.obtenerDeportes(); 
+	}
+
 	
 	/**
 	 * Usa los datos que tenga panel para añadir el socio

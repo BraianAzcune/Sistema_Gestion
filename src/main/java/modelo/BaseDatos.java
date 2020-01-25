@@ -23,7 +23,7 @@ public class BaseDatos {
 	/**
 	 * Datos Sobre la base de datos
 	 */
-	private static final String rutaDB= "db/clubdb";
+	private static final String rutaDB= "DB/clubdb";
 	private static final String user="fantastica";
 	private static final String pass="1548";
 	

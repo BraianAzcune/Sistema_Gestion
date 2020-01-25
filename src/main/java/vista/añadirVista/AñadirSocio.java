@@ -28,6 +28,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controlador.ControladorAñadirSocio;
+import modelo.Deporte;
 import vista.utilidades.InformacionDialog;
 import vista.utilidades.JTextFieldLimit;
 import vista.utilidades.TextPrompt;
@@ -36,13 +37,14 @@ import vista.utilidades.Verficador;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 
 
 public class AñadirSocio extends JPanel implements ActionListener{
 	
-	public  List<JCheckBox> arrayCheckBoxDeportes;
+	public  List<JCheckBox> arrayCheckBoxDeportes= new ArrayList<JCheckBox>();
 	
 	//Mensajes que se crean en los Dialog
 	private static final String msgAyuda="<ul><li>Utiliza Tab para navegar entre los campos</li><li>Shift+Tab para retroceder</li><li>Espacio para clic</li></ul>";
@@ -609,21 +611,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_panelDeportes.gridy = 12;
 		panel1.add(panelDeportes, gbc_panelDeportes);
 		
-		JCheckBox chckbxBsquet = new JCheckBox("B\u00E1squet");
-		chckbxBsquet.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		panelDeportes.add(chckbxBsquet);
-		
-		JCheckBox chckbxFtbol = new JCheckBox("F\u00FAtbol");
-		chckbxFtbol.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		panelDeportes.add(chckbxFtbol);
-		
-		JCheckBox chckbxVoley = new JCheckBox("Voley");
-		chckbxVoley.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		panelDeportes.add(chckbxVoley);
-		
-		JCheckBox chckbxCestoball = new JCheckBox("Cestoball");
-		chckbxCestoball.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		panelDeportes.add(chckbxCestoball);
+		this.AgregarOpcionesDeporte(panelDeportes);
 		
 		JSeparator separator_1 = new JSeparator();
 		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
@@ -654,7 +642,7 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		gbc_panelTipoSocio.gridy = 14;
 		panel1.add(panelTipoSocio, gbc_panelTipoSocio);
 		
-		
+		//OPCIONES DE SOCIO
 		JRadioButton rdbtnDeportista = new JRadioButton("Deportista");
 		rdbtnDeportista.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		rdbtnDeportista.setSelected(true);
@@ -679,6 +667,22 @@ public class AñadirSocio extends JPanel implements ActionListener{
 		grupoTipoSocio.add(rdbtnProtector);
 		grupoTipoSocio.add(rdbtnVitalicio);
 
+	}
+	
+	
+	private void AgregarOpcionesDeporte(JPanel panel) {
+	
+		List<Deporte> deportes= controladorAñadir.ObtenerListaDeportes();
+	
+		for(Deporte deporte : deportes) {
+			
+			JCheckBox check = new JCheckBox(deporte.getDeporte());
+			check.setFont(new Font("Tahoma", Font.PLAIN, 22));
+			check.setActionCommand(String.valueOf(deporte.getId()));
+			panel.add(check);
+			this.arrayCheckBoxDeportes.add(check);
+			
+		}
 	}
 	
 	

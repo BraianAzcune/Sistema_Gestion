@@ -1,4 +1,4 @@
-package modelo.dao;
+package modelo;
 
 import lombok.Builder;
 import lombok.Getter;
