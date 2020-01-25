@@ -181,7 +181,8 @@ public class ControladorAñadirSocio {
 		 * @return
 		 */
 		private Boolean verificarValidezID() {
-			if(!"".equals(socio.getNumerosocio())) {
+			if(socio.getNumerosocio()!=-1) {
+				log.debug("se ingreso un numero de socio");
 				String sql= "SELECT COUNT(*) FROM PUBLIC.PUBLIC.SOCIOS WHERE NUMEROSOCIO=:numero;";
 				
 			    
@@ -212,7 +213,11 @@ public class ControladorAñadirSocio {
 			
 			if(socio.getNumerosocio()==-1) {
 				sql="SELECT NUMEROSOCIO FROM SOCIOS WHERE NOMBRE=:nombre  AND APELLIDO=:apellido AND DNI=:dni;";
-				socio.setNumerosocio(con.createQuery(sql).executeScalar(Integer.class));
+				socio.setNumerosocio(con.createQuery(sql)
+						.addParameter("nombre", socio.getNombre())
+						.addParameter("apellido",socio.getApellido())
+						.addParameter("dni",socio.getDni())
+						.executeScalar(Integer.class));
 			}
 		}
 		
