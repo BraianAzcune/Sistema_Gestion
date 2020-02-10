@@ -26,9 +26,16 @@ import vista.PanelSocio;
 @Slf4j
 public class Filtro extends PanelSocio {
 
-  private ControladorFiltro filtro;
+  private ControladorFiltro controladorFiltro;
+  private VistaResultado vistaResultado;
+
+  public ControladorFiltro getControladorFiltro() {
+    return controladorFiltro;
+  }
+
   private SteelCheckBox btnCualquieraDeporte;
   private SteelCheckBox btnCualquieraTipoSocio;
+  private VerSocio padre;
 
   @Override
   protected Action accionBotonPrincipal() {
@@ -38,8 +45,12 @@ public class Filtro extends PanelSocio {
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
-
-        log.debug("NO IMPLEMENTADO");
+        // !TODO esto debe llamar al controladorFiltro, probablemente en un swingWorker. y ademas
+        // decirle a verSocio
+        // que acaba de ejecutar esta opcion, para que cierre el panel desplegable, asi se muestra
+        // el otro.
+        Filtro.this.padre.showPanelVistaResultado();
+        log.error("no implementado");
       }
     };
     return btn;
@@ -60,8 +71,9 @@ public class Filtro extends PanelSocio {
     return btn;
   }
 
-  public Filtro() {
-    this.filtro = new ControladorFiltro(this);
+  public Filtro(VerSocio padre) {
+    this.padre = padre;
+    this.controladorFiltro = new ControladorFiltro(this);
 
     super.crearPanel("Filtro Socios");
 
@@ -125,5 +137,21 @@ public class Filtro extends PanelSocio {
     // TODO Auto-generated method stub
     log.debug("NO IMPLEMENTADO");
     throw new java.lang.UnsupportedOperationException("Not supported yet.");
+  }
+
+  /**
+   * ControladorFiltro deberia llamar a este metodo, para que filtro le avise a verResultado, que
+   * hay un nuevo proveedor.
+   */
+  public void fireProveedorNuevoDisponible() {
+    this.vistaResultado.nuevoProveedor();
+  }
+
+  public VistaResultado getVistaResultado() {
+    return vistaResultado;
+  }
+
+  public void setVistaResultado(VistaResultado vistaResultado) {
+    this.vistaResultado = vistaResultado;
   }
 }

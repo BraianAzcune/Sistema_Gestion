@@ -8,8 +8,8 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 
 import controlador.ControladorAñadirSocio;
+import utilidades.utilidadeVista.TextPrompt;
 import vista.PanelSocio;
-import vista.utilidades.TextPrompt;
 
 
 

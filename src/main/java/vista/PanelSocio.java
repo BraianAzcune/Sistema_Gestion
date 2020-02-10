@@ -37,9 +37,9 @@ import javax.swing.border.EmptyBorder;
 import controlador.Controlador;
 import modelo.Deporte;
 import modelo.Socio;
-import vista.utilidades.InformacionDialog;
-import vista.utilidades.JTextFieldLimit;
-import vista.utilidades.Verficador;
+import utilidades.utilidadeVista.InformacionDialog;
+import utilidades.utilidadeVista.JTextFieldLimit;
+import utilidades.utilidadeVista.Verficador;
 
 /**
  * Panel generico de socio

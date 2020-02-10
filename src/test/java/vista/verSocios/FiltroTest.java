@@ -9,7 +9,7 @@ public class FiltroTest {
   @Test
   public void mostrarFiltro() {
     JFrame marco = new JFrame();
-    marco.add(new Filtro());
+    // marco.add(new Filtro());
 
     marco.setBounds(400, 400, 900, 500);
     marco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
