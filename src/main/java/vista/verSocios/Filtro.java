@@ -9,11 +9,13 @@ import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
+import javax.swing.JPanel;
 
 import controlador.ControladorFiltro;
 import eu.hansolo.custom.SteelCheckBox;
 import eu.hansolo.tools.ColorDef;
 import lombok.extern.slf4j.Slf4j;
+import utilidades.utilidadeVista.GrupoRadios;
 import vista.PanelSocio;
 
 
@@ -34,9 +36,17 @@ public class Filtro extends PanelSocio {
     return controladorFiltro;
   }
 
-  private SteelCheckBox btnCualquieraDeporte;
-  private SteelCheckBox btnCualquieraTipoSocio;
+  private SteelCheckBox btnTodosDeporte;
+  private SteelCheckBox btnTodosTipoSocio;
   private VerSocio padre;
+
+
+  /**
+   * Panel que se inserta en el panel deporte, y controla los radioButtons que tienen las opciones
+   * de filtrado por deporte "Y" "O"
+   */
+  private GrupoRadios radiosOpcionDeporte;
+
 
   @Override
   protected Action accionBotonPrincipal() {
@@ -52,7 +62,8 @@ public class Filtro extends PanelSocio {
         // el otro.
         Filtro.this.controladorFiltro.actualizarSQL();
         Filtro.this.padre.showPanelVistaResultado();
-        log.error("no implementado");
+        // Filtro.this.log.debug("is Y opcion= " + Filtro.this.isYoptionDeporte());
+        Filtro.this.log.error("no implementado");
       }
     };
     return btn;
@@ -89,7 +100,7 @@ public class Filtro extends PanelSocio {
   }
 
   /**
-   * Hace que los radioButtons del tipo socio, al ser apretados, pongan en false el boton cualquiera
+   * Hace que los radioButtons del tipo socio, al ser apretados, pongan en false el boton Todos
    */
   private void añadirEscucharCheckBoxTipoSocio() {
     Enumeration<AbstractButton> e = this.grupoTipoSocio.getElements();
@@ -98,14 +109,14 @@ public class Filtro extends PanelSocio {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-          btnCualquieraTipoSocio.setSelected(false);
+          btnTodosTipoSocio.setSelected(false);
         }
       });
     }
   }
 
   /**
-   * Ponemos a escuchar los eventos de checkBox si alguno es seleccionado el boton cualquiera se
+   * Ponemos a escuchar los eventos de checkBox si alguno es seleccionado el boton Todos se
    * desactiva
    */
   private void añadirEscucharCheckBoxDeporte() {
@@ -116,7 +127,7 @@ public class Filtro extends PanelSocio {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-          btnCualquieraDeporte.setSelected(false);
+          btnTodosDeporte.setSelected(false);
         }
       });
     }
@@ -124,18 +135,18 @@ public class Filtro extends PanelSocio {
   }
 
   /**
-   * crea un boton cualquiera, que esta activado en verdad por defecto.
+   * crea un boton Todos, que esta activado en verdad por defecto.
    */
   private void modificarTipoSocio() {
 
-    btnCualquieraTipoSocio = new SteelCheckBox();
-    btnCualquieraTipoSocio.setText("Cualquiera");
-    btnCualquieraTipoSocio.setColored(true);
-    btnCualquieraTipoSocio.setSelectedColor(ColorDef.RED);
-    btnCualquieraTipoSocio.setSelected(true);
+    btnTodosTipoSocio = new SteelCheckBox();
+    btnTodosTipoSocio.setText("Todos");
+    btnTodosTipoSocio.setColored(true);
+    btnTodosTipoSocio.setSelectedColor(ColorDef.RED);
+    btnTodosTipoSocio.setSelected(true);
 
     // evento del boton
-    btnCualquieraTipoSocio.addActionListener(new ActionListener() {
+    btnTodosTipoSocio.addActionListener(new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent event) {
@@ -145,41 +156,83 @@ public class Filtro extends PanelSocio {
 
     this.grupoTipoSocio.clearSelection();
 
-    this.panelTipoSocio.add(btnCualquieraTipoSocio);
+    this.panelTipoSocio.add(btnTodosTipoSocio);
   }
 
   /**
-   * Agrega un boton de estado "cualquiera", cuando es seleccionado se deseleccionan todos los
-   * checkbox.
+   * crea un boton opcion "Y" por defecto (activado) y "O" (desactivado), para definir como se busca
+   * los deportes.
+   * 
+   * ej: que tenga Basket y futbol. VS que tenga basket o futbol.
+   * 
+   * crea un boton de estado "Todos", cuando es seleccionado se deseleccionan todos los checkbox.
    */
   private void modificarPanelDeporte() {
 
-    btnCualquieraDeporte = new SteelCheckBox();
-    btnCualquieraDeporte.setText("Cualquiera");
-    btnCualquieraDeporte.setColored(true);
-    btnCualquieraDeporte.setSelectedColor(ColorDef.RED);
-    btnCualquieraDeporte.setSelected(true);
+    crearBotonesOpcionFiltradoDeporte(this.panelDeportes);
 
-    btnCualquieraDeporte.addActionListener(new ActionListener() {
+
+
+    // crear boton de estado "Todos"
+    btnTodosDeporte = new SteelCheckBox();
+    btnTodosDeporte.setText("Todos");
+    btnTodosDeporte.setColored(true);
+    btnTodosDeporte.setSelectedColor(ColorDef.RED);
+    btnTodosDeporte.setSelected(true);
+
+    // Si se apreta el boton de TODOS se desactivan las otras opciones.
+    btnTodosDeporte.addActionListener(new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent e) {
         for (JCheckBox check : Filtro.this.arrayCheckBoxDeportes) {
           check.setSelected(false);
+          Filtro.this.radiosOpcionDeporte.limpiar();
         }
       }
     });
 
-    this.panelDeportes.add(btnCualquieraDeporte);
+    this.panelDeportes.add(btnTodosDeporte);
 
   }
+
+  /**
+   * añade la opcion de filtrado, esto sera tenido en cuenta para el filtro
+   */
+  private void crearBotonesOpcionFiltradoDeporte(JPanel padre) {
+    radiosOpcionDeporte = new GrupoRadios(new String[] {"Y", "O"}, "opciones");
+
+    // Si se apreta alguna opcion se desactiva la opcion "TODOS"
+    radiosOpcionDeporte.addActionListenerALLRadios(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        Filtro.this.btnTodosDeporte.setSelected(false);
+      }
+    });
+    this.panelDeportes.add(radiosOpcionDeporte);
+  }
+
+
+  /**
+   * Retorna true si la opcion de filtrado del deporte esta en Y.
+   * 
+   * @return
+   */
+  public boolean isYoptionDeporte() {
+    return radiosOpcionDeporte.isSelected("Y");
+  }
+
 
   @Override
   protected void resetear() {
 
+    // resetea todos los campos comunes
     super.resetear();
-    this.btnCualquieraDeporte.setSelected(true);
-    this.btnCualquieraTipoSocio.setSelected(true);
+    // se ponen los botones de Todos en activo por defecto
+    this.btnTodosDeporte.setSelected(true);
+    this.radiosOpcionDeporte.limpiar();
+    this.btnTodosTipoSocio.setSelected(true);
+
   }
 
   @Override

@@ -20,7 +20,7 @@ public class AñadirSocio extends PanelSocio {
 
   @Override
   protected Action accionBotonPrincipal() {
-    Action btn = new AbstractAction("Confirmar",
+    Action btn = new AbstractAction("Guardar",
         new ImageIcon(getClass().getResource("/imagenes/comprobar.png"))) {
 
 
