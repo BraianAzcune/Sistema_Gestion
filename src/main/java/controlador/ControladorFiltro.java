@@ -12,16 +12,22 @@ import vista.verSocios.Filtro;
  */
 public class ControladorFiltro {
   private Filtro panel;
+  private String SQL;
 
   public ControladorFiltro(Filtro filtro) {
     this.panel = filtro;
   }
 
+  public void actualizarSQL() {
+
+    Socio socio = panel.mapearSocio();
+
+  }
+
 
   /**
-   * Otorga un proveedor de datos, segun lo que se especifique en el filtro. Si se cambia el filtro
-   * debera llamarse esta clase de nuevo, para que cree un nuevo proveedor segun los nuevos ajustes
-   * del filtro
+   * Retorna un proveedor de datos, construido segun la consulta sql, que corresponderia a lo que
+   * esta especificado en el panel Filtro. Esta consulta sql se actualiza cuando se llama al metodo
    * 
    * @return
    */

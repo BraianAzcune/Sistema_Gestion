@@ -2,11 +2,12 @@ package vista.verSocios;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 
 import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
 import controlador.ControladorFiltro;
@@ -49,6 +50,7 @@ public class Filtro extends PanelSocio {
         // decirle a verSocio
         // que acaba de ejecutar esta opcion, para que cierre el panel desplegable, asi se muestra
         // el otro.
+        Filtro.this.controladorFiltro.actualizarSQL();
         Filtro.this.padre.showPanelVistaResultado();
         log.error("no implementado");
       }
@@ -81,8 +83,45 @@ public class Filtro extends PanelSocio {
 
     modificarTipoSocio();
 
+    añadirEscucharCheckBoxDeporte();
+    añadirEscucharCheckBoxTipoSocio();
+
   }
 
+  /**
+   * Hace que los radioButtons del tipo socio, al ser apretados, pongan en false el boton cualquiera
+   */
+  private void añadirEscucharCheckBoxTipoSocio() {
+    Enumeration<AbstractButton> e = this.grupoTipoSocio.getElements();
+    while (e.hasMoreElements()) {
+      e.nextElement().addActionListener(new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          btnCualquieraTipoSocio.setSelected(false);
+        }
+      });
+    }
+  }
+
+  /**
+   * Ponemos a escuchar los eventos de checkBox si alguno es seleccionado el boton cualquiera se
+   * desactiva
+   */
+  private void añadirEscucharCheckBoxDeporte() {
+
+    for (JCheckBox check : this.arrayCheckBoxDeportes) {
+      check.addActionListener(new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+          btnCualquieraDeporte.setSelected(false);
+        }
+      });
+    }
+
+  }
 
   /**
    * crea un boton cualquiera, que esta activado en verdad por defecto.
@@ -93,14 +132,25 @@ public class Filtro extends PanelSocio {
     btnCualquieraTipoSocio.setText("Cualquiera");
     btnCualquieraTipoSocio.setColored(true);
     btnCualquieraTipoSocio.setSelectedColor(ColorDef.RED);
+    btnCualquieraTipoSocio.setSelected(true);
 
+    // evento del boton
+    btnCualquieraTipoSocio.addActionListener(new ActionListener() {
 
+      @Override
+      public void actionPerformed(ActionEvent event) {
+        grupoTipoSocio.clearSelection();
+      }
+    });
+
+    this.grupoTipoSocio.clearSelection();
 
     this.panelTipoSocio.add(btnCualquieraTipoSocio);
   }
 
   /**
-   * Agrega un boton de estado "cualquiera" y limpiar
+   * Agrega un boton de estado "cualquiera", cuando es seleccionado se deseleccionan todos los
+   * checkbox.
    */
   private void modificarPanelDeporte() {
 
@@ -108,28 +158,28 @@ public class Filtro extends PanelSocio {
     btnCualquieraDeporte.setText("Cualquiera");
     btnCualquieraDeporte.setColored(true);
     btnCualquieraDeporte.setSelectedColor(ColorDef.RED);
+    btnCualquieraDeporte.setSelected(true);
 
+    btnCualquieraDeporte.addActionListener(new ActionListener() {
 
-
-    JButton btnLimpiar = new JButton("Limpiar");
-    btnLimpiar.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         for (JCheckBox check : Filtro.this.arrayCheckBoxDeportes) {
           check.setSelected(false);
         }
-        btnCualquieraDeporte.setSelected(false);
       }
     });
+
     this.panelDeportes.add(btnCualquieraDeporte);
-    this.panelDeportes.add(btnLimpiar);
+
   }
 
   @Override
   protected void resetear() {
 
     super.resetear();
-    btnCualquieraDeporte.setSelected(false);
+    this.btnCualquieraDeporte.setSelected(true);
+    this.btnCualquieraTipoSocio.setSelected(true);
   }
 
   @Override
