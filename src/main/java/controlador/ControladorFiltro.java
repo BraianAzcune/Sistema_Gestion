@@ -1,6 +1,9 @@
 package controlador;
 
+import java.util.List;
+
 import modelo.Socio;
+import modelo.dao.SocioDAO;
 import utilidades.paginacionTablas.ProveedorDeDatosPaginacion;
 import vista.verSocios.Filtro;
 
@@ -13,9 +16,13 @@ import vista.verSocios.Filtro;
 public class ControladorFiltro {
   private Filtro panel;
   private String SQL;
+  private SocioDAO socioDAO;
 
   public ControladorFiltro(Filtro filtro) {
     this.panel = filtro;
+
+    socioDAO = new SocioDAO();
+
   }
 
   public void actualizarSQL() {
@@ -34,6 +41,28 @@ public class ControladorFiltro {
   public ProveedorDeDatosPaginacion<Socio> generarProveedorDatosPaginacionSegunFiltro() {
     throw new java.lang.UnsupportedOperationException("Not supported yet.");
 
+  }
+
+  /**
+   * Este es el proveedor por defecto, simplemente muestra todo.
+   * 
+   * @return
+   */
+  public ProveedorDeDatosPaginacion<Socio> getProveedorDefault() {
+
+    return new ProveedorDeDatosPaginacion<Socio>() {
+
+      @Override
+      public int getTotalRowsCount() {
+        // !TODO esto esta llamando vaya a saber cuantas veces...
+        return socioDAO.getTotalRow();
+      }
+
+      @Override
+      public List<Socio> getRows(int startIndex, int endIndex) {
+        return socioDAO.getSocios(startIndex, endIndex);
+      }
+    };
   }
 
 }

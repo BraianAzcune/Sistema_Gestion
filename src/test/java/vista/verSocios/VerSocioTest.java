@@ -1,9 +1,13 @@
 package vista.verSocios;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 import org.junit.Test;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class VerSocioTest {
 
   @Test
@@ -13,7 +17,12 @@ public class VerSocioTest {
 
     VerSocio panel = new VerSocio();
 
-    marco.add(panel);
+
+    log.debug("altura forzada" + panel.getScrollableTracksViewportHeight());
+    log.debug("ancho forzado" + panel.getScrollableTracksViewportWidth());
+
+    JScrollPane scroll = new JScrollPane(panel);
+    marco.add(scroll);
 
 
 

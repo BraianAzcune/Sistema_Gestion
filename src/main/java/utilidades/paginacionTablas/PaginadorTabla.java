@@ -5,7 +5,6 @@ package utilidades.paginacionTablas;
  * template file, choose Tools | Templates and open the template in the editor.
  */
 
-
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -23,6 +22,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Recibe un ModeloTabla a traves de el JTable que solicita, y le inicializa todo el contenido, y
  * prepara para llamarlo cuando ocurren eventos de botones, o cambia la cantidad de filas que se
@@ -36,6 +37,7 @@ import javax.swing.event.TableModelListener;
  * 
  * @author braian
  */
+@Slf4j
 public class PaginadorTabla<T> implements ActionListener, TableModelListener {
   // ASPECTO TECNICO
   private JTable tabla;
@@ -111,6 +113,7 @@ public class PaginadorTabla<T> implements ActionListener, TableModelListener {
    *        de cuantas filas ver a vez
    */
   public void setPanelPaginacion(JPanel panelPaginador) {
+
 
     this.panelPaginacionBotones = new JPanel(new GridLayout(1, limiteBotonesPaginador, 3, 3));
 
@@ -219,6 +222,8 @@ public class PaginadorTabla<T> implements ActionListener, TableModelListener {
    */
   public void actualizarBotonesPaginacion() {
 
+    log.debug("Entre a actualizar botones");
+
     panelPaginacionBotones.removeAll();
 
     int totalFilas = proveedorDeDatosPaginacion.getTotalRowsCount();
@@ -260,6 +265,7 @@ public class PaginadorTabla<T> implements ActionListener, TableModelListener {
       }
 
     } else {
+      log.debug("agrege un solo boton");
       agregarRangoBotonesPaginacion(panelPaginacionBotones, 1, paginas);
     }
 

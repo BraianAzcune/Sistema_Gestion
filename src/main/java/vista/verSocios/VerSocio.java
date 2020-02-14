@@ -42,6 +42,8 @@ public class VerSocio extends JXTaskPaneContainer implements PropertyChangeListe
     crearFiltro();
     crearVistaResultado();
     unirFiltroYResultado();
+
+
   }
 
   /**
