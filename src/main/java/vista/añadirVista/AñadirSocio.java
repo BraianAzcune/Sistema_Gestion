@@ -41,9 +41,7 @@ public class AñadirSocio extends PanelSocio {
       @Override
       public void actionPerformed(ActionEvent e) {
 
-        AñadirSocio.this.resetear();
-        // Hacemos que el primer boton del grupo de socios, se seleccione, para evitar cosas raras
-        AñadirSocio.this.grupoTipoSocio.getElements().nextElement().setSelected(true);
+        AñadirSocio.this.limpiar();
       }
     };
     return btn;
@@ -59,5 +57,11 @@ public class AñadirSocio extends PanelSocio {
         new TextPrompt("dejar en blanco, para asignacion automatica", textFieldNumeroSocio);
     placeholder.changeAlpha(0.4f);
     placeholder.changeStyle(Font.ITALIC);
+  }
+
+  public void limpiar() {
+    AñadirSocio.this.resetear();
+    // Hacemos que el primer boton del grupo de socios, se seleccione, para evitar cosas raras
+    AñadirSocio.this.grupoTipoSocio.getElements().nextElement().setSelected(true);
   }
 }

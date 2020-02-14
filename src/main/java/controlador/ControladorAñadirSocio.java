@@ -113,6 +113,7 @@ public class ControladorAñadirSocio {
       if (exito) {
         JOptionPane.showMessageDialog(null, "Socio " + socio.getNombre() + " agregado",
             "Añadir Socios", JOptionPane.INFORMATION_MESSAGE);
+        panel.limpiar();
         super.done();
       }
 
