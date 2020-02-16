@@ -236,7 +236,7 @@ public class Filtro extends PanelSocio {
   }
 
   @Override
-  public int queTipoSocioEs() {
+  public String queTipoSocioEs() {
     // TODO Auto-generated method stub
     log.debug("NO IMPLEMENTADO");
     throw new java.lang.UnsupportedOperationException("Not supported yet.");

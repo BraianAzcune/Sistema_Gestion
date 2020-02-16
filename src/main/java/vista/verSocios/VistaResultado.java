@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
@@ -45,9 +46,9 @@ public class VistaResultado extends JPanel {
     tablaSocios.setRowHeight(tablaSocios.getRowHeight() + 10);
     tablaSocios.setFillsViewportHeight(true);
     // Scroll encapsula a la tabla
-    // JScrollPane scroll = new JScrollPane(tablaSocios);
+    JScrollPane scroll = new JScrollPane(tablaSocios);
     // Se añade el scroll al panel
-    this.add(tablaSocios, BorderLayout.CENTER);
+    this.add(scroll, BorderLayout.CENTER);
 
     // PAGINACION
 
@@ -65,7 +66,7 @@ public class VistaResultado extends JPanel {
     paginador.setPanelPaginacion(panelPaginacion);
 
     // AGREGAMOS EL PANEL VACIO AL PANEL CENTRAL (osea this)
-    this.add(panelPaginacion, BorderLayout.NORTH);
+    this.add(panelPaginacion, BorderLayout.SOUTH);
 
   }
 

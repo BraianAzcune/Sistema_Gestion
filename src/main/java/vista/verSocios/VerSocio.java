@@ -65,6 +65,7 @@ public class VerSocio extends JXTaskPaneContainer implements PropertyChangeListe
     this.panelVistaResultado = new JXTaskPane();
     this.panelVistaResultado.setTitle("Resultados");
     this.panelVistaResultado.setCollapsed(true);
+
     // añadimos vistaResultado dentro del panel deslizable
     this.panelVistaResultado.add(this.vistaResultado);
 

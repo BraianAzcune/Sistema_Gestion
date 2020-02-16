@@ -17,6 +17,6 @@ public class Socio {
   String telefono;
   String Direccion;
   String fecha_alta;
-  int tipo_socio;// clave foranea
-  int numerosocio;// clave primaria
+  String tipo_socio;// clave foranea
+  String numerosocio;// clave primaria
 }

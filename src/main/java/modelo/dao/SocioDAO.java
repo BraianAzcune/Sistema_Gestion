@@ -36,7 +36,7 @@ public class SocioDAO {
    */
   public int getTotalRow() {
 
-    contarTEST();
+
 
     try (Connection con = BaseDatos.obtenerSql2o().open()) {
 
@@ -48,14 +48,7 @@ public class SocioDAO {
     return 0;
   }
 
-  /**
-   * !TODO TEST DESPUES BORRAR
-   */
-  private void contarTEST() {
-    cantidadDeVecesLLamado++;
-    log.debug("cantidad de veces llamado:" + cantidadDeVecesLLamado);
 
-  }
 
   /**
    * Utiliza la sentencia sql obtenerTodosSociosIndice
@@ -66,7 +59,6 @@ public class SocioDAO {
    */
   public List<Socio> getSocios(int inicio, int fin) {
 
-    contarTEST();
 
 
     try (Connection con = BaseDatos.obtenerSql2o().open()) {

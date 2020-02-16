@@ -4,6 +4,6 @@ import lombok.Builder;
 
 @Builder
 public class SocioXDeporte {
-  int id_socio;
+  String id_socio;
   int id_deporte;
 }

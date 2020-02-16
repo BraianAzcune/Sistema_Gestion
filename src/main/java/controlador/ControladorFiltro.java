@@ -25,12 +25,32 @@ public class ControladorFiltro {
 
   }
 
+  /**
+   * Crea una nueva consulta sql atendiendo a los criterios que se especificaron en el filtro
+   */
   public void actualizarSQL() {
 
     Socio socio = panel.mapearSocio();
-
+    crearColumnasQueSeMostraran(socio.toString());
   }
 
+  /**
+   * En principio si todas las columnas estan en blanco por defecto se mostraran
+   * NUMEROSOCIO,nombre,apellido,telefono
+   * 
+   * pero si hay alguna de estas que no esta, se agregara. Como por ejemplo DNI. si se pusiera un
+   * criterio para este entonces apareceria NUMEROSOCIO,nombre,apellido,telefono, DNI.
+   */
+  private void crearColumnasQueSeMostraran(String valores) {
+
+    String[] columnasDefault = {" NUMEROSOCIO", "nombre", "apellido", "telefono"};
+
+    /*
+     * Pasar socio a string, separar a lista, luego extrar los que no sean nulos, y para los que no
+     * esten en columnaDefault agregarlo al final.
+     */
+
+  }
 
   /**
    * Retorna un proveedor de datos, construido segun la consulta sql, que corresponderia a lo que

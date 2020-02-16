@@ -49,7 +49,7 @@ public class ControladorAñadirSocio {
    * 
    * @return SocioXDeporte
    */
-  private static SocioXDeporte[] mapearSocioXDeporte(int id_socio, int[] id_deportes) {
+  private static SocioXDeporte[] mapearSocioXDeporte(String id_socio, int[] id_deportes) {
 
     SocioXDeporte[] array = new SocioXDeporte[id_deportes.length];
 
@@ -148,7 +148,7 @@ public class ControladorAñadirSocio {
      * @return
      */
     private Boolean verificarValidezID() {
-      if (socio.getNumerosocio() != -1) {
+      if (socio.getNumerosocio() != null) {
         log.debug("se ingreso un numero de socio");
         String sql = "SELECT COUNT(*) FROM PUBLIC.PUBLIC.SOCIOS WHERE NUMEROSOCIO=:numero;";
 
@@ -167,7 +167,7 @@ public class ControladorAñadirSocio {
      */
     private void insertarSocio() {
       String sql;
-      if (socio.getNumerosocio() == -1) {
+      if (socio.getNumerosocio() == null) {
         sql = "INSERT INTO PUBLIC.PUBLIC.SOCIOS\r\n"
             + "(NOMBRE, APELLIDO, EMAIL, DNI, TELEFONO, DIRECCION, FECHA_ALTA, FK_TIPO_SOCIO)\r\n"
             + "VALUES(:nombre, :apellido, :email, :dni, :telefono, :Direccion, CURRENT_DATE, :tipo_socio);";
@@ -179,14 +179,15 @@ public class ControladorAñadirSocio {
 
       con.createQuery(sql).bind(socio).executeUpdate();
 
-      if (socio.getNumerosocio() == -1) {
+      if (socio.getNumerosocio() == null) {
         sql =
             "SELECT NUMEROSOCIO FROM SOCIOS WHERE NOMBRE=:nombre  AND APELLIDO=:apellido AND DNI=:dni;";
         socio.setNumerosocio(con.createQuery(sql).addParameter("nombre", socio.getNombre())
             .addParameter("apellido", socio.getApellido()).addParameter("dni", socio.getDni())
-            .executeScalar(Integer.class));
+            .executeScalar(String.class));
       }
     }
+
 
   }
 

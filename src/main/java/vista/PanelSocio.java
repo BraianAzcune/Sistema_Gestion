@@ -730,12 +730,6 @@ public abstract class PanelSocio extends JPanel {
         .dni(this.textFieldDNI.getText()).telefono(this.textFieldTelefono.getText())
         .Direccion(this.textFieldDireccion.getText()).tipo_socio(this.queTipoSocioEs()).build();
 
-    if (this.textFieldNumeroSocio.getText().equals("")) {
-      s.setNumerosocio(-1);
-    } else {
-      s.setNumerosocio(Integer.parseInt(this.textFieldNumeroSocio.getText()));
-    }
-
     return s;
   }
 
@@ -766,10 +760,10 @@ public abstract class PanelSocio extends JPanel {
    * @return entero que representa en la db que tipo de socio es (-1,0,1,2)->
    *         (cualquiera,depor,protec,vita)
    */
-  public int queTipoSocioEs() {
-    int rta = -1;
+  public String queTipoSocioEs() {
+    String rta = null;
     if (grupoTipoSocio.getSelection() != null) {
-      rta = Integer.parseInt(grupoTipoSocio.getSelection().getActionCommand());
+      rta = grupoTipoSocio.getSelection().getActionCommand();
     }
     return rta;
   };
