@@ -15,7 +15,7 @@ public class Socio {
   String email;
   String dni;
   String telefono;
-  String Direccion;
+  String direccion;
   String fecha_alta;
   String tipo_socio;// clave foranea
   String numerosocio;// clave primaria

@@ -728,7 +728,7 @@ public abstract class PanelSocio extends JPanel {
     Socio s = Socio.builder().nombre(this.textFieldNombre.getText())
         .apellido(this.textFieldApellido.getText()).email(this.textFieldEmail.getText())
         .dni(this.textFieldDNI.getText()).telefono(this.textFieldTelefono.getText())
-        .Direccion(this.textFieldDireccion.getText()).tipo_socio(this.queTipoSocioEs()).build();
+        .direccion(this.textFieldDireccion.getText()).tipo_socio(this.queTipoSocioEs()).build();
 
     return s;
   }
