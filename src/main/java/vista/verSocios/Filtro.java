@@ -235,12 +235,7 @@ public class Filtro extends PanelSocio {
 
   }
 
-  @Override
-  public String queTipoSocioEs() {
-    // TODO Auto-generated method stub
-    log.debug("NO IMPLEMENTADO");
-    throw new java.lang.UnsupportedOperationException("Not supported yet.");
-  }
+
 
   /**
    * ControladorFiltro deberia llamar a este metodo, para que filtro le avise a verResultado, que
@@ -256,5 +251,13 @@ public class Filtro extends PanelSocio {
 
   public void setVistaResultado(VistaResultado vistaResultado) {
     this.vistaResultado = vistaResultado;
+  }
+
+  public boolean isTipoSocioTodosActivo() {
+    return btnTodosTipoSocio.isSelected();
+  }
+
+  public boolean isDeportesTodosActivo() {
+    return btnTodosDeporte.isSelected();
   }
 }

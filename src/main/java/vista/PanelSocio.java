@@ -725,11 +725,34 @@ public abstract class PanelSocio extends JPanel {
    */
   public Socio mapearSocio() {
     // mapeamos los datos que seguro van
-    Socio s = Socio.builder().nombre(this.textFieldNombre.getText())
-        .apellido(this.textFieldApellido.getText()).email(this.textFieldEmail.getText())
-        .dni(this.textFieldDNI.getText()).telefono(this.textFieldTelefono.getText())
-        .direccion(this.textFieldDireccion.getText()).tipo_socio(this.queTipoSocioEs()).build();
+    Socio s = Socio.builder().nombre(isVoid(this.textFieldNombre.getText()))
+        .apellido(isVoid(this.textFieldApellido.getText()))
+        .email(isVoid(this.textFieldEmail.getText())).dni(isVoid(this.textFieldDNI.getText()))
+        .telefono(isVoid(this.textFieldTelefono.getText()))
+        .direccion(isVoid(this.textFieldDireccion.getText())).tipo_socio(this.queTipoSocioEs())
+        .numerosocio(isVoid(this.textFieldNumeroSocio.getText())).build();
 
+
+
+    return s;
+  }
+
+  /**
+   * Utilizado por mapearSocio.
+   * 
+   * Motivo= si simplemente le pones lo del textfield ocurre que llena el string como "", den vez de
+   * null. y luego al hacer socio.tostring, te pone ej: nombre=,apellido=,
+   * 
+   * y para parsear se usa = nombre=null,apellido=null. ese null es puesto por el generador Socio,
+   * si ve que el string esta nulo. para eso esta este metodo.
+   * 
+   * @param s
+   * @return si esta vacio null, sino el mismo string
+   */
+  private String isVoid(String s) {
+    if (s.equals("")) {
+      return null;
+    }
     return s;
   }
 
