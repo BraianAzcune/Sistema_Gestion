@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import lombok.extern.slf4j.Slf4j;
 import modelo.Socio;
@@ -35,6 +36,12 @@ public class ControladorFiltro {
 
   /**
    * Crea una nueva consulta sql atendiendo a los criterios que se especificaron en el filtro
+   * 
+   * Esto trae dos campos que se deben llenar con sql2o que son
+   * 
+   * *LIMIT:cantidad
+   *
+   * *OFFSET:desplazamiento
    */
   public void actualizarSQL() {
 
@@ -48,7 +55,8 @@ public class ControladorFiltro {
     String primeraParte = crearSelectParteConsulta(socio.toString());
     consulta.append(primeraParte);
 
-    boolean deboAgregarAND = primeraParte.contains("AND");
+    boolean deboAgregarAND =
+        primeraParte.contains("AND") || primeraParte.contains("=") || primeraParte.contains("LIKE");
     // segunda parte si esta especificado el tipo de socio se añade.
     if (!panel.isTipoSocioTodosActivo()) {
       if (deboAgregarAND) {
@@ -70,7 +78,35 @@ public class ControladorFiltro {
           panel.isDeportesTodosActivo(), panel.isYoptionDeporte()));
     }
 
-    // !TODO cuarta parte order by, y implementacion para pedir en trozos los datos
+    // cuarta parte order by, y implementacion para pedir en trozos los datos
+    consulta.append(" ORDER BY NUMEROSOCIO LIMIT :cantidad OFFSET :desplazamiento;");
+
+    String respuesta = consulta.toString();
+
+    // !TODO PARTE TEST imprimimos lo que es la consulta final
+    // Distintos casos que hay que probar, con los botones todo activado, desactivado, alternado,
+    // con y, o deporte activado, con distintos deporte.
+    // con algunos campos escritos, todos escritos, etc..., con todo vacio.. etc..
+
+
+    // Comprobaciones (si esta WHERE ... ORDER entonces hay que quitar le where, lo que ocurrio es
+    // que no
+    // hubo ningun campo escrito
+
+    // (?i)-> insensible a mayusculas y minusculas
+    // se pone el doble de \ para las indicaciones especiales por que se confunden con caracteres
+    // especiales.
+    Pattern p = Pattern.compile("(?i)WhErE\\s+OrDer");
+
+    java.util.regex.Matcher m = p.matcher(respuesta);
+
+    // Si encontro una coincidencia. entonces tenemos que quitar el Where.
+    if (m.find()) {
+      respuesta = respuesta.substring(0, m.start()) + " ORDER"
+          + respuesta.substring(m.end(), respuesta.length());
+    }
+
+    log.debug("CONSULTA= " + respuesta);
 
   }
 
@@ -87,11 +123,33 @@ public class ControladorFiltro {
       // si esta todos los deportes activo, no hay que tener criterio alguno para buscar.
       return "";
     } else {
+      // creamos la parte de la consulta para obtener los deportes que es analoga para la opcion "Y"
+      // y "O"
+      StringBuilder deporteConsulta = new StringBuilder(
+          "numerosocio IN (SELECT ID_SOCIO FROM SOCIOSXDEPORTE WHERE ID_DEPORTE IN (");
+
+      for (int i = 0; i < idDeportes.length; i++) {
+        deporteConsulta.append(String.valueOf(idDeportes[i]));
+        // mientras quede otra vuelta
+        if (i + 1 < idDeportes.length) {
+          deporteConsulta.append(",");
+        } else {
+          deporteConsulta.append(")");
+        }
+      }
+
+      deporteConsulta.append(" GROUP BY ID_SOCIO ");
+
+      // si es "y" opcion debe llevar esto, sino lo lleva se comporta como la opcion "O"
       if (yDeportesActivo) {
         // se debe buscar que tenga todos si o si
-      } else {
-        // se debe buscar que tenga alguno de los nombrados
+        deporteConsulta.append("HAVING COUNT(*)=");
+        deporteConsulta.append(String.valueOf(idDeportes.length));
       }
+
+      deporteConsulta.append(") ");
+
+      return deporteConsulta.toString();
     }
 
   }
@@ -127,7 +185,11 @@ public class ControladorFiltro {
       String pair = pairs[i];
       String[] keyValue = pair.split("=");
       if (!keyValue[1].equals("null")) {
-        myMap.put(keyValue[0], keyValue[1]);
+
+        // EXCEPCIONES QUE NO DEBEN SER CONTADAS, EJ= TIPO_SOCIO
+        if (!keyValue[0].equals("tipo_socio")) {
+          myMap.put(keyValue[0], keyValue[1]);
+        }
       }
     }
 

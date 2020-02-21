@@ -61,9 +61,12 @@ public class Filtro extends PanelSocio {
         // que acaba de ejecutar esta opcion, para que cierre el panel desplegable, asi se muestra
         // el otro.
         Filtro.this.controladorFiltro.actualizarSQL();
-        Filtro.this.padre.showPanelVistaResultado();
-        // Filtro.this.log.debug("is Y opcion= " + Filtro.this.isYoptionDeporte());
-        Filtro.this.log.error("no implementado");
+
+        // !TODO Comentaste esto para testear actualizarSQL
+
+        // Filtro.this.padre.showPanelVistaResultado();
+        // // Filtro.this.log.debug("is Y opcion= " + Filtro.this.isYoptionDeporte());
+        // Filtro.this.log.error("no implementado");
       }
     };
     return btn;
@@ -126,7 +129,11 @@ public class Filtro extends PanelSocio {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+          // este tiene que ser primero
+          if (btnTodosDeporte.isSelected() && !radiosOpcionDeporte.setSelected("Y")) {
+            log.error("Le cambiaste el nombre a la opcion de Filtro deporte Y, no se encuentra");
+          }
+          // este tiene que ser segundo
           btnTodosDeporte.setSelected(false);
         }
       });

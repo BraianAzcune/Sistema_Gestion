@@ -67,6 +67,26 @@ public class GrupoRadios extends JPanel {
     return false;
   }
 
+
+  /**
+   * Selecciona el radioButton con el nombre pasado
+   * 
+   * @param nombre nombre que se le puso
+   * @return true si se logro asingar, falso sino existe el radio nombrado.
+   */
+  public boolean setSelected(String nombre) {
+
+    Enumeration<AbstractButton> enu = grupo.getElements();
+    while (enu.hasMoreElements()) {
+      AbstractButton rd = enu.nextElement();
+      if (rd.getText().equals(nombre)) {
+        rd.setSelected(true);
+        return true;
+      }
+    }
+    return false;
+  }
+
   /***
    * 
    * @return String del radio seleccionado o null si ninguno esta seleccionado.
