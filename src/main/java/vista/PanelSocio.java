@@ -715,6 +715,9 @@ public abstract class PanelSocio extends JPanel {
       this.arrayCheckBoxDeportes.add(check);
 
     }
+    // Despues de inicializar los deportes, hacemos que el ArrayList deseche el espacio sobrante que
+    // haya reservado.
+    ((ArrayList<?>) this.arrayCheckBoxDeportes).trimToSize();
   }
 
 

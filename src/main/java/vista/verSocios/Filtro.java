@@ -60,13 +60,12 @@ public class Filtro extends PanelSocio {
         // decirle a verSocio
         // que acaba de ejecutar esta opcion, para que cierre el panel desplegable, asi se muestra
         // el otro.
-        Filtro.this.controladorFiltro.actualizarSQL();
+        Filtro.this.controladorFiltro.actualizarModeloTabla(Filtro.this.vistaResultado);;
 
-        // !TODO Comentaste esto para testear actualizarSQL
+        Filtro.this.padre.showPanelVistaResultado();
 
-        // Filtro.this.padre.showPanelVistaResultado();
-        // // Filtro.this.log.debug("is Y opcion= " + Filtro.this.isYoptionDeporte());
-        // Filtro.this.log.error("no implementado");
+        // !TODO TEST
+        System.gc();
       }
     };
     return btn;

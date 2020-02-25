@@ -292,17 +292,39 @@ public class PaginadorTabla<T> implements ActionListener, TableModelListener {
    */
   @Override
   public void tableChanged(TableModelEvent e) {
+
     actualizarBotonesPaginacion();
+
   }
 
   /**
    * Para cambiar el proveedor de paginacion, pone todo en 0 de nuevo. se resetea a la pagina
    * inicial y se reconstruyen los botones, y se pagina la nueva informacion.
    */
-  public void setProveedorPaginacion() {
+  private void setProveedorPaginacion() {
 
     paginaActual = 1;
     actualizarBotonesPaginacion();
     paginar();
+  }
+
+
+
+  /**
+   * Cuando se quiera cambiar lo que va a mostrar, y las columnas hay que usar este metodo.
+   * 
+   * @param m
+   * @param p
+   */
+  public void actualizarModeloYPaginacion(ModeloTabla<T> m, ProveedorDeDatosPaginacion<T> p) {
+
+    // nos desuscribimos del anterior para que se borre
+    this.modeloTabla.removeTableModelListener(this);
+
+    this.modeloTabla = m;
+    this.modeloTabla.addTableModelListener(this);
+    this.proveedorDeDatosPaginacion = p;
+
+    setProveedorPaginacion();
   }
 }

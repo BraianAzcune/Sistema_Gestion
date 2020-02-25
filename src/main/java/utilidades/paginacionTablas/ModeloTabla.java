@@ -19,11 +19,10 @@ import javax.swing.table.AbstractTableModel;
 public abstract class ModeloTabla<T> extends AbstractTableModel {
   private List<T> lista = new ArrayList<T>();
 
-
-
   // METODOS SOBRESCRITOS
   @Override
   public int getRowCount() {
+
     return lista.size();
   }
 

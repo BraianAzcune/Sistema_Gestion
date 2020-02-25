@@ -23,10 +23,38 @@ public class SocioDAO {
   private int cantidadDeVecesLLamado = 0;
 
 
+  /**
+   * Constructor con consulta personalizada...
+   * 
+   * @param consulta
+   */
+  public SocioDAO(String consulta) {
+
+  }
+
   public SocioDAO() {
     rtaNull = new ArrayList<Socio>();
     Socio s = Socio.builder().nombre("base de datos vacia").apellido("o un error ocurrio").build();
     rtaNull.add(s);
+  }
+
+
+  /**
+   * Debe ser una consulta count..
+   * 
+   * @param consultaCount
+   * @return
+   */
+  public int getTotalRow(String consultaCount) {
+
+    try (Connection con = BaseDatos.obtenerSql2o().open()) {
+
+      return con.createQuery(consultaCount).executeScalar(Integer.class);
+    } catch (Exception e) {
+      log.error("error obtener total de filas en Socio", e);
+
+    }
+    return 0;
   }
 
   /**
@@ -48,6 +76,19 @@ public class SocioDAO {
     return 0;
   }
 
+
+
+  public List<Socio> getSocio(String consulta, int inicio, int fin) {
+    try (Connection con = BaseDatos.obtenerSql2o().open()) {
+      return con.createQuery(consulta).addParameter("cantidad", fin - inicio)
+          .addParameter("desplazamiento", inicio).executeAndFetch(Socio.class);
+    } catch (Exception e) {
+      log.error("Error obtener todos los socios por indice ", e);
+    }
+
+    // !TODO esto puede generar muchas excepciones...
+    return rtaNull;
+  }
 
 
   /**

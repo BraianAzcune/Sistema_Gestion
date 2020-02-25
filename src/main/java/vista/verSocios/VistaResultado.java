@@ -30,9 +30,26 @@ public class VistaResultado extends JPanel {
   // Se utiliza para obtener el proveedor de datos.
   private ControladorFiltro controladorFiltro;
 
+  private JTable tablaSocios;
+
+  private PaginadorTabla<Socio> paginador;
+
   public VistaResultado(ControladorFiltro controladorFiltro) {
     this.controladorFiltro = controladorFiltro;
     construirPanel();
+  }
+
+  /**
+   * Se debe llamar este metodo para actulizar los resultados
+   * 
+   * @param m
+   * @param p
+   * 
+   */
+  public void actualizarResultadosAMostrar(ModeloTabla<Socio> m,
+      ProveedorDeDatosPaginacion<Socio> p) {
+    tablaSocios.setModel(m);
+    paginador.actualizarModeloYPaginacion(m, p);
   }
 
   private void construirPanel() {
@@ -40,8 +57,7 @@ public class VistaResultado extends JPanel {
 
     // MODELO DE TABLA (define las columnas que tiene, y sus nombres)
     TableModel modelo = crearModeloTabla();
-    // TABLA
-    JTable tablaSocios = new JTable(modelo);
+    tablaSocios = new JTable(modelo);
     tablaSocios.setFont(new Font("Tahoma", Font.PLAIN, 20));
     tablaSocios.setRowHeight(tablaSocios.getRowHeight() + 10);
     tablaSocios.setFillsViewportHeight(true);
@@ -55,9 +71,8 @@ public class VistaResultado extends JPanel {
     // Colocamos el proveedor por defecto, que mostrara el listado de todos los socios.
     ProveedorDeDatosPaginacion<Socio> proveedorDeDatosPaginacion =
         controladorFiltro.getProveedorDefault();
-    // esto es PaginadorTabla tiene tanto lo visual como logico para la paginacion
-    PaginadorTabla<Socio> paginador = new PaginadorTabla<Socio>(tablaSocios,
-        proveedorDeDatosPaginacion, new int[] {10, 25, 50, 100}, 10);
+    paginador = new PaginadorTabla<Socio>(tablaSocios, proveedorDeDatosPaginacion,
+        new int[] {10, 25, 50, 100}, 10);
 
     // creamos un panel vacio
     JPanel panelPaginacion = new JPanel();

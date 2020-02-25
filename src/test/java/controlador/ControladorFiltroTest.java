@@ -2,8 +2,10 @@ package controlador;
 
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,9 +32,50 @@ public class ControladorFiltroTest {
 
 
   @Test
-  public void actualizarSQLTest() {
+  public void TESTMultipleMatches() {
 
 
+    String consulta = "blabla FROM perro gato alfiler FROM sapo pepe FROM jose";
+
+    Pattern p = Pattern.compile("(?i)FROM.*FROM");
+
+    java.util.regex.Matcher m = p.matcher(consulta);
+
+    String subSQL = "";
+    // Si encontro una coincidencia. entonces tenemos que quitar el Where.
+    if (m.find()) {
+      // Nos quedamos con la parte de adentro entre el SELECT, y FROM
+      subSQL = consulta.substring(m.start());
+      System.out.println(m.group(0));
+      System.out.println(consulta.charAt(m.start()));
+    }
+
+    System.out.println(subSQL);
+  }
+
+
+  @Test
+  public void getColumnasSQL() {
+
+    String consulta = "SELECT    pepe, jose,daniel,  maria   FROM";
+
+    Pattern p = Pattern.compile("(?i)SELECT .*FROM");
+
+    java.util.regex.Matcher m = p.matcher(consulta);
+
+    String subSQL = "";
+    // Si encontro una coincidencia. entonces tenemos que quitar el Where.
+    if (m.find()) {
+      // Nos quedamos con la parte de adentro entre el SELECT, y FROM
+      subSQL = consulta.substring(m.start() + 6, m.end() - 4);
+    }
+
+    // removemos cualquier tipo de espacio en blanco
+    subSQL = subSQL.replaceAll("\\s+", "");
+
+    // retornamos el array con el nombre de columnas
+
+    System.out.println(Arrays.toString(subSQL.split(",")));
   }
 
 

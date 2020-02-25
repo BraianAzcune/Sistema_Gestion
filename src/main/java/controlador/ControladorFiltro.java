@@ -12,8 +12,10 @@ import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import modelo.Socio;
 import modelo.dao.SocioDAO;
+import utilidades.paginacionTablas.ModeloTabla;
 import utilidades.paginacionTablas.ProveedorDeDatosPaginacion;
 import vista.verSocios.Filtro;
+import vista.verSocios.VistaResultado;
 
 /**
  * Nos devuelve un proveedorDeDatosPaginacion segun lo que especifica el filtro.
@@ -35,6 +37,118 @@ public class ControladorFiltro {
   }
 
   /**
+   * LLamado por el filtro cuando hay una nueva busqueda
+   * 
+   * crea la nueva consulta y genera el Modelo y Proveedor correspondientes para que funcione el
+   * JTable
+   * 
+   * @param vistaResultado
+   */
+  public void actualizarModeloTabla(VistaResultado vistaResultado) {
+
+    String consulta = actualizarSQL();
+    ProveedorDeDatosPaginacion<Socio> proveedorNuevo =
+        generarProveedorDatosPaginacionSegunFiltro(consulta);
+    ModeloTabla<Socio> modeloNuevo = generarModeloNuevoSegunFiltro(consulta);
+
+    vistaResultado.actualizarResultadosAMostrar(modeloNuevo, proveedorNuevo);
+  }
+
+
+
+  /**
+   * Dada una consulta sql, entrega un array de String con el nombre de las columnas
+   * 
+   * @param consulta
+   * @return {"columnName1","columnName2",...}
+   */
+  private String[] getColumnasSQL(String consulta) {
+
+    String subSQL = consulta.substring(consulta.toUpperCase().indexOf("SELECT") + 6,
+        consulta.toUpperCase().indexOf("FROM") - 1);
+
+    // removemos cualquier tipo de espacio en blanco
+    subSQL = subSQL.replaceAll("\\s+", "");
+
+    // lo ponemos en minusculas por si acaso....
+    subSQL = subSQL.toLowerCase();
+
+    // retornamos el array con el nombre de columnas
+    return subSQL.split(",");
+  }
+
+
+  private ModeloTabla<Socio> generarModeloNuevoSegunFiltro(String consulta) {
+
+    // Procedemos a extraer la parte de que columnas se mostraran, en un arrayList.
+    String[] columnas = getColumnasSQL(consulta);
+
+    log.debug("TEST nombre columnas= " + Arrays.toString(columnas));
+
+    String fueraIndice = "FUERA DE INDICE= ";
+    ModeloTabla<Socio> modelo = new ModeloTabla<Socio>() {
+
+      @Override
+      public int getColumnCount() {
+        return columnas.length;
+      }
+
+      @Override
+      public Object getValueAt(Socio generico, int columna) {
+        String nombreColumna = getColumnName(columna);
+        String rta;
+
+        // alta paja... probabilidades de que falle un caracter 75%, probababilidades
+        // de que se descubra el error 23%
+        switch (nombreColumna) {
+          case "nombre":
+            rta = generico.getNombre();
+            break;
+          case "apellido":
+            rta = generico.getApellido();
+            break;
+          case "email":
+            rta = generico.getEmail();
+            break;
+          case "dni":
+            rta = generico.getDni();
+            break;
+          case "telefono":
+            rta = generico.getTelefono();
+            break;
+          case "direccion":
+            rta = generico.getDireccion();
+            break;
+          case "fecha_alta":
+            rta = generico.getFecha_alta();
+            break;
+          case "numerosocio":
+            rta = generico.getNumerosocio();
+            break;
+          default:
+            // lo concatenamos con la columna que tendria que ir... asi las probabilidades
+            // aumentan al 66%
+            rta = fueraIndice + nombreColumna;
+            break;
+        }
+
+        return rta;
+      }
+
+      @Override
+      public String getColumnName(int columna) {
+        if (columnas.length > columna) {
+          return columnas[columna];
+        } else {
+          return fueraIndice;
+        }
+      }
+
+    };
+    return modelo;
+  }
+
+  /**
    * Crea una nueva consulta sql atendiendo a los criterios que se especificaron en el filtro
    * 
    * Esto trae dos campos que se deben llenar con sql2o que son
@@ -43,7 +157,7 @@ public class ControladorFiltro {
    *
    * *OFFSET:desplazamiento
    */
-  public void actualizarSQL() {
+  private String actualizarSQL() {
 
     Socio socio = panel.mapearSocio();
 
@@ -83,10 +197,6 @@ public class ControladorFiltro {
 
     String respuesta = consulta.toString();
 
-    // !TODO PARTE TEST imprimimos lo que es la consulta final
-    // Distintos casos que hay que probar, con los botones todo activado, desactivado, alternado,
-    // con y, o deporte activado, con distintos deporte.
-    // con algunos campos escritos, todos escritos, etc..., con todo vacio.. etc..
 
 
     // Comprobaciones (si esta WHERE ... ORDER entonces hay que quitar le where, lo que ocurrio es
@@ -96,18 +206,19 @@ public class ControladorFiltro {
     // (?i)-> insensible a mayusculas y minusculas
     // se pone el doble de \ para las indicaciones especiales por que se confunden con caracteres
     // especiales.
-    Pattern p = Pattern.compile("(?i)WhErE\\s+OrDer");
+    Pattern p = Pattern.compile("(?i)WHERE\\s+ORDER");
 
     java.util.regex.Matcher m = p.matcher(respuesta);
 
     // Si encontro una coincidencia. entonces tenemos que quitar el Where.
     if (m.find()) {
-      respuesta = respuesta.substring(0, m.start()) + " ORDER"
-          + respuesta.substring(m.end(), respuesta.length());
+      respuesta = respuesta.substring(0, m.start())
+          + respuesta.substring(respuesta.toUpperCase().indexOf("ORDER"));;
     }
 
     log.debug("CONSULTA= " + respuesta);
 
+    return respuesta;
   }
 
   /**
@@ -298,15 +409,73 @@ public class ControladorFiltro {
     return rtaFinal.substring(1, rtaFinal.length() - 1);
   }
 
+
+  /**
+   * Dada una consulta sql, devuelve su version COUNT
+   * 
+   * elimina los nombres de campos por COUNT(*) y elimina Todo lo que quede despues de la palabra
+   * ORDER, inclusive esa. (ya que no debe llevar eso, el count)
+   * 
+   * @param consulta
+   * @return
+   */
+  private String getCountConsulta(String consulta) {
+
+
+    Pattern p = Pattern.compile("(?i)FROM");
+
+    java.util.regex.Matcher m = p.matcher(consulta);
+
+    String subSQL = "";
+
+
+
+    if (m.find()) {
+      // Nos quedamos con la parte despues del primer FROM
+      subSQL = "SELECT COUNT(*) " + consulta.substring(m.start());
+    }
+
+    // quitamos la parte de limit
+    subSQL = subSQL.substring(0, subSQL.indexOf("ORDER"));
+
+
+    return subSQL;
+
+  }
+
+
   /**
    * Retorna un proveedor de datos, construido segun la consulta sql, que corresponderia a lo que
    * esta especificado en el panel Filtro. Esta consulta sql se actualiza cuando se llama al metodo
    * 
+   * @param consulta
+   * 
    * @return
    */
-  public ProveedorDeDatosPaginacion<Socio> generarProveedorDatosPaginacionSegunFiltro() {
-    throw new java.lang.UnsupportedOperationException("Not supported yet.");
+  private ProveedorDeDatosPaginacion<Socio> generarProveedorDatosPaginacionSegunFiltro(
+      String consulta) {
 
+    String consultaCount = getCountConsulta(consulta);
+
+    log.debug("TEST= CONSULTACOUNT= " + consultaCount);
+    log.debug("TEST consulta= " + consulta);
+    SocioDAO dao = new SocioDAO();
+
+    ProveedorDeDatosPaginacion<Socio> proveedor = new ProveedorDeDatosPaginacion<Socio>() {
+
+      @Override
+      public int getTotalRowsCount() {
+        return dao.getTotalRow(consultaCount);
+      }
+
+      @Override
+      public List<Socio> getRows(int startIndex, int endIndex) {
+        return dao.getSocio(consulta, startIndex, endIndex);
+      }
+
+    };
+
+    return proveedor;
   }
 
   /**

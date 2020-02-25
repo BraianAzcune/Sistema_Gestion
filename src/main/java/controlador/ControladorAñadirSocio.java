@@ -170,11 +170,11 @@ public class ControladorAñadirSocio {
       if (socio.getNumerosocio() == null) {
         sql = "INSERT INTO PUBLIC.PUBLIC.SOCIOS\r\n"
             + "(NOMBRE, APELLIDO, EMAIL, DNI, TELEFONO, DIRECCION, FECHA_ALTA, FK_TIPO_SOCIO)\r\n"
-            + "VALUES(:nombre, :apellido, :email, :dni, :telefono, :Direccion, CURRENT_DATE, :tipo_socio);";
+            + "VALUES(:nombre, :apellido, :email, :dni, :telefono, :direccion, CURRENT_DATE, :tipo_socio);";
       } else {
         sql = "INSERT INTO PUBLIC.PUBLIC.SOCIOS\r\n"
             + "(NOMBRE, APELLIDO, EMAIL, DNI, TELEFONO, DIRECCION, FECHA_ALTA, FK_TIPO_SOCIO,NUMEROSOCIO)\r\n"
-            + "VALUES(:nombre, :apellido, :email, :dni, :telefono, :Direccion, CURRENT_DATE, :tipo_socio,:numerosocio);";
+            + "VALUES(:nombre, :apellido, :email, :dni, :telefono, :direccion, CURRENT_DATE, :tipo_socio,:numerosocio);";
       }
 
       con.createQuery(sql).bind(socio).executeUpdate();
