@@ -33,7 +33,7 @@ public class SocioDAO {
   }
 
   public SocioDAO() {
-    rtaNull = new ArrayList<Socio>();
+    rtaNull = new ArrayList<Socio>(1);
     Socio s = Socio.builder().nombre("base de datos vacia").apellido("o un error ocurrio").build();
     rtaNull.add(s);
   }
@@ -113,6 +113,24 @@ public class SocioDAO {
     return rtaNull;
   }
 
+  /**
+   * 
+   * @param idSocio
+   * @return socio que coincida con el id
+   */
+  public Socio getSocio(String idSocio) {
+    try (Connection con = BaseDatos.obtenerSql2o().open()) {
+      List<Socio> rta = con.createQuery("SELECT * FROM SOCIOS WHERE NUMEROSOCIO=:idSocio")
+          .addParameter("idSocio", Integer.parseInt(idSocio))
+          .addColumnMapping("FK_TIPO_SOCIO", "tipo_socio").executeAndFetch(Socio.class);
+      if (rta.get(0) != null) {
+        return rta.get(0);
+      }
+    } catch (Exception e) {
+      log.error("Error obtener socio segun id ", e);
+    }
+    return rtaNull.get(0);
+  }
 
 
 }

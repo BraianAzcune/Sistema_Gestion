@@ -108,6 +108,7 @@ public abstract class PanelSocio extends JPanel {
    * todo.
    */
   protected ButtonGroup grupoTipoSocio;
+  private JButton btnBorrarNumeroSocio;
 
 
   /**
@@ -525,7 +526,7 @@ public abstract class PanelSocio extends JPanel {
       };
     });
 
-    JButton btnBorrarNumeroSocio = new JButton("");
+    btnBorrarNumeroSocio = new JButton("");
     btnBorrarNumeroSocio.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
@@ -816,6 +817,17 @@ public abstract class PanelSocio extends JPanel {
 
     // Ponemos el tipo de socio a deporte
     grupoTipoSocio.clearSelection();
+  }
+
+
+
+  /**
+   * quita completamente el boton borrar de numeroSocio, esto lo utiliza EditarSocio
+   */
+  protected void eliminarBotonBorrarNUMEROSOCIO() {
+    panel1.remove(btnBorrarNumeroSocio);
+    btnBorrarNumeroSocio = null;
+
   }
 
 }
