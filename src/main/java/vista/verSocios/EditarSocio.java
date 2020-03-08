@@ -1,5 +1,6 @@
 package vista.verSocios;
 
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -9,6 +10,8 @@ import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JScrollPane;
 
 import controlador.ControladorEditarSocio;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +19,8 @@ import modelo.Socio;
 import vista.PanelSocio;
 
 /**
+ * Esta clase se muetra en un JDialog al instanciarla. (tipo popup)
+ * 
  * Esta clase necesita un ID_SOCIO, para recuperar la informacion relacionada a ese socio, y sus
  * deportes. aqui se puede editar un socio, y sus deportes, Ademas de suspenderlo.
  * 
@@ -27,6 +32,7 @@ public class EditarSocio extends PanelSocio {
 
 
   private ControladorEditarSocio controlador;
+  private JDialog ventana;
 
   /**
    * Consulta a db, los datos del socio y sus deportes.
@@ -40,6 +46,24 @@ public class EditarSocio extends PanelSocio {
     controlador.inicializarPanel(ID_SOCIO);
 
     cambiarNumeroSocioTextfield();
+
+    crearDialog();
+  }
+
+  /**
+   * 
+   */
+  private void crearDialog() {
+    ventana = new JDialog(Frame.getFrames()[0], "Editar Socio");
+
+    JScrollPane scroll = new JScrollPane(this);
+    getVentana().add(scroll);
+
+    getVentana().pack();
+    getVentana().setLocationRelativeTo(Frame.getFrames()[0]);
+    getVentana().setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+    getVentana().setVisible(true);
   }
 
 
@@ -98,9 +122,9 @@ public class EditarSocio extends PanelSocio {
       @Override
       public void actionPerformed(ActionEvent e) {
 
+        EditarSocio.this.controlador.actualizarDatos();
 
-
-        throw new java.lang.UnsupportedOperationException("Not supported yet.");
+        EditarSocio.this.getVentana().dispose();
       }
     };
     return btn;
@@ -113,11 +137,14 @@ public class EditarSocio extends PanelSocio {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-
-        throw new java.lang.UnsupportedOperationException("Not supported yet.");
+        EditarSocio.this.getVentana().dispose();
       }
     };
     return btn;
+  }
+
+  public JDialog getVentana() {
+    return ventana;
   }
 
 }

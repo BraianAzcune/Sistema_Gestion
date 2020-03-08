@@ -132,5 +132,23 @@ public class SocioDAO {
     return rtaNull.get(0);
   }
 
+  /**
+   * Actualiza los datos del socio.
+   * 
+   * @param socio
+   */
+  public void actualizarSocio(Socio socio) {
+    try (Connection con = BaseDatos.obtenerSql2o().open()) {
+
+      con.createQuery("UPDATE SOCIOS SET nombre=:nombre, apellido=:apellido, email=:email, "
+          + "dni=:dni, telefono=:telefono, direccion=:direccion, FK_TIPO_SOCIO=:tipo_socio "
+          + " WHERE NUMEROSOCIO=:numerosocio").bind(socio).executeUpdate();
+
+
+    } catch (Exception e) {
+      log.error("Error actualizar datos del socio ", e);
+    }
+  }
+
 
 }

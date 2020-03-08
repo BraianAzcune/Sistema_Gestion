@@ -3,6 +3,8 @@ package controlador;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import lombok.extern.slf4j.Slf4j;
 import modelo.Socio;
 import modelo.SocioXDeporte;
@@ -45,6 +47,21 @@ public class ControladorEditarSocio {
 
     panel.putDeportes(idDeportes.stream().mapToInt(i -> i).toArray());
 
+  }
+
+  /**
+   * actuliza los datos personales, y los deportes.
+   */
+  public void actualizarDatos() {
+    Socio socio = panel.mapearSocio();
+    int[] idDeportes = panel.mapearDeportes();
+
+    socioDAO.actualizarSocio(socio);
+    socioXDeporte.eliminarDeportesQueTenga(socio.getNumerosocio());
+    socioXDeporte.agregarDeporte(socio.getNumerosocio(), idDeportes);
+
+    JOptionPane.showMessageDialog(panel.getVentana(), "Socio " + socio.getNombre() + " actualizado",
+        "Editar Socio", JOptionPane.INFORMATION_MESSAGE);
   }
 
 }

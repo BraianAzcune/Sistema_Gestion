@@ -49,4 +49,13 @@ public class SocioDAOTest {
 
   }
 
+  @Test
+  public void actualizarSocioTest() {
+    Socio socio = Socio.builder().nombre("FACUNDO").apellido("Ciperiani").numerosocio("2").build();
+
+    SocioDAO dao = new SocioDAO();
+
+    dao.actualizarSocio(socio);
+  }
+
 }
