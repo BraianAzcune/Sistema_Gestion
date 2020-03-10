@@ -2,6 +2,8 @@ package vista.verSocios;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -29,7 +31,7 @@ import utilidades.paginacionTablas.ProveedorDeDatosPaginacion;
  *
  */
 @Slf4j
-public class VistaResultado extends JPanel implements MouseListener {
+public class VistaResultado extends JPanel implements MouseListener, KeyListener {
 
   private Filtro filtro;
 
@@ -65,6 +67,7 @@ public class VistaResultado extends JPanel implements MouseListener {
     TableModel modelo = crearModeloTabla();
     tablaSocios = new JTable(modelo);
     tablaSocios.addMouseListener(this);
+    tablaSocios.addKeyListener(this);
     tablaSocios.setFont(new Font("Tahoma", Font.PLAIN, 20));
     tablaSocios.setRowHeight(tablaSocios.getRowHeight() + 10);
     tablaSocios.setFillsViewportHeight(true);
@@ -165,6 +168,17 @@ public class VistaResultado extends JPanel implements MouseListener {
   }
 
 
+  private void crearVentanaEditarSocio() {
+    String idSocio = (String) this.tablaSocios.getValueAt(this.tablaSocios.getSelectedRow(), 0);
+    EditarSocio editar = new EditarSocio(idSocio);
+    editar.getVentana().addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosed(WindowEvent e) {
+        paginador.paginar();
+      }
+    });
+  }
+
   // EVENTOS MOUSE.
 
   // Hacemos que con doble click se habra EditarSocio, y cuando se cierre se actualiza la tabla.
@@ -172,15 +186,7 @@ public class VistaResultado extends JPanel implements MouseListener {
   public void mouseClicked(MouseEvent e) {
 
     if (e.getClickCount() == 2) {
-
-      String idSocio = (String) this.tablaSocios.getValueAt(this.tablaSocios.getSelectedRow(), 0);
-      EditarSocio editar = new EditarSocio(idSocio);
-      editar.getVentana().addWindowListener(new WindowAdapter() {
-        @Override
-        public void windowClosed(WindowEvent e) {
-          paginador.paginar();
-        }
-      });
+      crearVentanaEditarSocio();
     }
   }
 
@@ -203,4 +209,17 @@ public class VistaResultado extends JPanel implements MouseListener {
   public void mouseReleased(MouseEvent e) {
 
   }
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+    if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+      crearVentanaEditarSocio();
+    }
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e) {}
+
+  @Override
+  public void keyTyped(KeyEvent e) {}
 }
