@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
+
+
 /**
  * Esta clase es un panel con un borde y un titulo para agrupar radiobutton que se generan
  * dinamicamente pasandoles por el constructor un string con un metodo para saber si tal radiobutton
@@ -23,6 +25,8 @@ public class GrupoRadios extends JPanel {
   private String titulo;
 
   private ButtonGroup grupo;
+
+
 
   /**
    * 

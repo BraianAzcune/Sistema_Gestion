@@ -91,7 +91,11 @@ public class PaginadorTabla<T> implements ActionListener, TableModelListener {
     }
   }
 
-  private void paginar() {
+  /**
+   * Pide los datos a la base de datos, segun lo que tenga el proveedor actualmente
+   */
+  public void paginar() {
+    log.debug("Entre a paginar");
     int inicio = (paginaActual - 1) * filaPermitida;// porque el default es 1 //caso base= (1-1)*10
     int finalizacion = inicio + filaPermitida;
     if (finalizacion > proveedorDeDatosPaginacion.getTotalRowsCount()) {

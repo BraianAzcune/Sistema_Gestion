@@ -1,10 +1,17 @@
 package vista;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +21,7 @@ import javax.swing.UIManager;
 import lombok.extern.slf4j.Slf4j;
 import modelo.BaseDatos;
 import vista.añadirVista.AñadirSocio;
+import vista.verSocios.VerSocio;
 
 @Slf4j
 public class Principal extends JFrame {
@@ -85,12 +93,46 @@ public class Principal extends JFrame {
 
     setTitle("Cultural Argentino");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setBounds(200, 200, 786, 686);
+    setBounds(200, 200, 840, 750);
     setIconImage(new ImageIcon(getClass().getResource("/imagenes/cultu.png")).getImage());
-    // Incorporo al JFRAME Principal un panel AñadirSocio
-    JPanel panelAñadirSocio = new AñadirSocio();
-    add(panelAñadirSocio);
+    CardLayout layout = new CardLayout();
+    JPanel cardPanel = new JPanel(layout);
 
 
+    // Paneles
+    VerSocio verSocio = new VerSocio();
+    cardPanel.add(verSocio, "verSocio");
+    AñadirSocio añadirSocio = new AñadirSocio();
+    cardPanel.add(añadirSocio, "añadirSocio");
+
+    add(cardPanel, BorderLayout.CENTER);
+    // PANEL PARA SELECCIONAR OPCIONES
+    JPanel panelOpciones = new JPanel(new FlowLayout(FlowLayout.LEADING, 8, 10));
+    panelOpciones.setBackground(new Color(229, 231, 234));
+
+
+
+    JButton btnVerSocios = new JButton("Ver Socios");
+    btnVerSocios.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        layout.show(cardPanel, "verSocio");
+      }
+    });
+    JButton btnAñadirSocio = new JButton("Añadir Socio");
+    btnAñadirSocio.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        layout.show(cardPanel, "añadirSocio");
+      }
+    });
+
+
+    panelOpciones.add(btnVerSocios);
+    panelOpciones.add(btnAñadirSocio);
+
+    add(panelOpciones, BorderLayout.NORTH);
   }
 }

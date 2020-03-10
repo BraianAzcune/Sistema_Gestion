@@ -161,7 +161,7 @@ public class ControladorFiltro {
 
     Socio socio = panel.mapearSocio();
 
-    log.info("AQUIII " + socio.toString());
+    // log.info("AQUIII " + socio.toString());
 
     StringBuilder consulta = new StringBuilder();
 
@@ -188,8 +188,15 @@ public class ControladorFiltro {
       if (deboAgregarAND) {
         consulta.append(" AND ");
       }
-      consulta.append(crearDeporteParteConsulta(panel.mapearDeportes(),
-          panel.isDeportesTodosActivo(), panel.isYoptionDeporte()));
+      int[] idDeporte = panel.mapearDeportes();
+      if (idDeporte.length > 0) {
+
+        consulta.append(crearDeporteParteConsulta(idDeporte, panel.isDeportesTodosActivo(),
+            panel.isYoptionDeporte()));
+      } else {
+        consulta.append(
+            "NOT EXISTS ( SELECT ID_SOCIO FROM SOCIOSXDEPORTE WHERE SOCIOS.NUMEROSOCIO=SOCIOSXDEPORTE.ID_SOCIO) ");
+      }
     }
 
     // cuarta parte order by, y implementacion para pedir en trozos los datos

@@ -2,6 +2,10 @@ package vista.verSocios;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -9,6 +13,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import controlador.ControladorFiltro;
+import lombok.extern.slf4j.Slf4j;
 import modelo.Socio;
 import utilidades.paginacionTablas.ModeloTabla;
 import utilidades.paginacionTablas.PaginadorTabla;
@@ -23,7 +28,8 @@ import utilidades.paginacionTablas.ProveedorDeDatosPaginacion;
  * @author braian
  *
  */
-public class VistaResultado extends JPanel {
+@Slf4j
+public class VistaResultado extends JPanel implements MouseListener {
 
   private Filtro filtro;
 
@@ -58,6 +64,7 @@ public class VistaResultado extends JPanel {
     // MODELO DE TABLA (define las columnas que tiene, y sus nombres)
     TableModel modelo = crearModeloTabla();
     tablaSocios = new JTable(modelo);
+    tablaSocios.addMouseListener(this);
     tablaSocios.setFont(new Font("Tahoma", Font.PLAIN, 20));
     tablaSocios.setRowHeight(tablaSocios.getRowHeight() + 10);
     tablaSocios.setFillsViewportHeight(true);
@@ -158,4 +165,42 @@ public class VistaResultado extends JPanel {
   }
 
 
+  // EVENTOS MOUSE.
+
+  // Hacemos que con doble click se habra EditarSocio, y cuando se cierre se actualiza la tabla.
+  @Override
+  public void mouseClicked(MouseEvent e) {
+
+    if (e.getClickCount() == 2) {
+
+      String idSocio = (String) this.tablaSocios.getValueAt(this.tablaSocios.getSelectedRow(), 0);
+      EditarSocio editar = new EditarSocio(idSocio);
+      editar.getVentana().addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosed(WindowEvent e) {
+          paginador.paginar();
+        }
+      });
+    }
+  }
+
+  @Override
+  public void mouseEntered(MouseEvent e) {
+
+  }
+
+  @Override
+  public void mouseExited(MouseEvent e) {
+
+  }
+
+  @Override
+  public void mousePressed(MouseEvent e) {
+
+  }
+
+  @Override
+  public void mouseReleased(MouseEvent e) {
+
+  }
 }

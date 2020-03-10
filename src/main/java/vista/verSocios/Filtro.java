@@ -16,6 +16,7 @@ import eu.hansolo.custom.SteelCheckBox;
 import eu.hansolo.tools.ColorDef;
 import lombok.extern.slf4j.Slf4j;
 import utilidades.utilidadeVista.GrupoRadios;
+import utilidades.utilidadeVista.UtilidadesVisuales;
 import vista.PanelSocio;
 
 
@@ -128,12 +129,27 @@ public class Filtro extends PanelSocio {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-          // este tiene que ser primero
-          if (btnTodosDeporte.isSelected() && !radiosOpcionDeporte.setSelected("Y")) {
-            log.error("Le cambiaste el nombre a la opcion de Filtro deporte Y, no se encuentra");
+
+          // Si esto es falso, verificamos si somos hay otro activo
+          if (!check.isSelected()) {
+            for (JCheckBox c : arrayCheckBoxDeportes) {
+              if (c.isSelected()) {
+                break;
+              } else {
+                UtilidadesVisuales.setPanelEnabled(radiosOpcionDeporte, false);
+                radiosOpcionDeporte.limpiar();
+                btnTodosDeporte.setSelected(true);
+                break;
+              }
+            }
+          } else {
+
+            if (!radiosOpcionDeporte.isEnabled()) {
+              UtilidadesVisuales.setPanelEnabled(radiosOpcionDeporte, true);
+            }
+            // este tiene que ser segundo
+            btnTodosDeporte.setSelected(false);
           }
-          // este tiene que ser segundo
-          btnTodosDeporte.setSelected(false);
         }
       });
     }
@@ -194,6 +210,8 @@ public class Filtro extends PanelSocio {
         for (JCheckBox check : Filtro.this.arrayCheckBoxDeportes) {
           check.setSelected(false);
           Filtro.this.radiosOpcionDeporte.limpiar();
+
+          UtilidadesVisuales.setPanelEnabled(radiosOpcionDeporte, false);
         }
       }
     });
@@ -207,7 +225,7 @@ public class Filtro extends PanelSocio {
    */
   private void crearBotonesOpcionFiltradoDeporte(JPanel padre) {
     radiosOpcionDeporte = new GrupoRadios(new String[] {"Y", "O"}, "opciones");
-
+    UtilidadesVisuales.setPanelEnabled(radiosOpcionDeporte, false);
     // Si se apreta alguna opcion se desactiva la opcion "TODOS"
     radiosOpcionDeporte.addActionListenerALLRadios(new ActionListener() {
       @Override
@@ -225,7 +243,7 @@ public class Filtro extends PanelSocio {
    * @return
    */
   public boolean isYoptionDeporte() {
-    return radiosOpcionDeporte.isSelected("Y");
+    return radiosOpcionDeporte.isSelected("Y") && !this.btnTodosDeporte.isSelected();
   }
 
 

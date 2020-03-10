@@ -50,6 +50,11 @@ public class SocioXDeporteDAO {
   }
 
   public void agregarDeporte(String numerosocio, int[] idDeportes) {
+
+    if (idDeportes.length == 0) {
+      return;
+    }
+
     final String sql = "INSERT INTO SOCIOSXDEPORTE(ID_SOCIO, ID_DEPORTE) VALUES (:socio, :deporte)";
 
     final int idsocio = Integer.parseInt(numerosocio);
